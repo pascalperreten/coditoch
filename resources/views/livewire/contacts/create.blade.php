@@ -9,17 +9,15 @@
 
     <div class="max-w-md m-auto">
         @if ($this->success_message !== '')
-            <div class=>
-                <flux:card class="text-center space-y-6 p-10 m-auto max-w-md">
-                    <flux:heading size="xl">{{ $this->success_message }}</flux:heading>
-                    <flux:text>{{ __('Your entry has been successfully submitted!') }}</flux:text>
-                    <flux:button class="bg-cyan-700 hover:bg-cyan-800 cursor-pointer" variant="primary"
-                        wire:click="newContact">{{ __('Back to the form') }}
-                    </flux:button>
-                </flux:card>
-            </div>
+            <flux:card class="text-center space-y-6 p-10 m-auto max-w-md">
+                <flux:heading size="xl">{{ $this->success_message }}</flux:heading>
+                <flux:text>{{ __('Your entry has been successfully submitted!') }}</flux:text>
+                <flux:button class="bg-cyan-700 hover:bg-cyan-800 cursor-pointer" variant="primary"
+                    wire:click="newContact">{{ __('Back to the form') }}
+                </flux:button>
+            </flux:card>
         @else
-            <form wire:submit.prevent="save" class="space-y-6">
+            <div class="space-y-6">
                 <flux:tab.group>
                     <flux:tabs variant="segmented" class="w-full" wire:model="with_contact">
                         <flux:tab wire:click="resetNumbers" name="with_contact">
@@ -42,6 +40,7 @@
                                 {{ __('Yes') }}
                             </flux:button>
                         @else
+                        <form wire:submit.prevent="save" class="space-y-6">
                             <flux:field>
                                 <flux:label>Name<span class="text-red-500">*</span></flux:label>
                                 <flux:input wire:key="name" wire:model="form.name" type="text" />
@@ -61,12 +60,12 @@
                                 <flux:error name="form.way_to_get_in_contact" />
                             </flux:field>
                             @if ($this->form->way_to_get_in_contact === '')
-                                <flux:input disabled placeholder="{{ __('Please select the field above') }}">
+                                <flux:input wire:key="no_contact_method" disabled placeholder="{{ __('Please select the field above') }}">
                                 </flux:input>
                             @endif
 
                             @if ($this->form->way_to_get_in_contact === 'phone')
-                                <flux:field>
+                                <flux:field wire:key="phone_field">
                                     <flux:label>{{ __('Phone Number') }}<span class="text-red-500">*</span>
                                     </flux:label>
                                     <flux:input wire:key="phone" wire:model="form.phone" type="tel"
@@ -74,7 +73,7 @@
                                     <flux:error name="form.phone" />
                                 </flux:field>
                             @elseif ($this->form->way_to_get_in_contact === 'social_media')
-                                <div class="border border-gray-200 p-4 rounded space-y-6">
+                                <div class="border border-gray-200 p-4 rounded space-y-6" wire:key="social_media_fields">
                                     <flux:field>
                                         <flux:label>{{ __('Which platform?') }}<span class="text-red-500">*</span>
                                         </flux:label>
@@ -90,7 +89,7 @@
                                     </flux:field>
 
                                     @if ($this->form->social_platform === 'other_platform')
-                                        <flux:field>
+                                        <flux:field wire:key="other_platform_field">
                                             <flux:label>{{ __('Platform') }}<span class="text-red-500">*</span>
                                             </flux:label>
                                             <flux:input wire:key="other_platform" wire:model="form.other_platform"
@@ -98,27 +97,27 @@
                                             <flux:error name="form.other_platform" />
                                         </flux:field>
                                     @endif
-                                    <flux:field>
+                                    <flux:field wire:key="user_name_field">
                                         <flux:label>{{ __('Username') }}<span class="text-red-500">*</span>
                                         </flux:label>
                                         <flux:input wire:key="user_name" wire:model="form.user_name" type="text" />
                                         <flux:error name="form.user_name" />
                                     </flux:field>
-                                    <flux:field>
+                                    <flux:field wire:key="url_field">
                                         <flux:label>{{ __('URL to profile') }}</flux:label>
                                         <flux:input wire:key="url" wire:model="form.url" type="url" />
                                         <flux:error name="form.url" />
                                     </flux:field>
                                 </div>
                             @elseif ($this->form->way_to_get_in_contact === 'email')
-                                <flux:field>
+                                <flux:field wire:key="email_field">
                                     <flux:label>{{ __('Email Address') }}<span class="text-red-500">*</span>
                                     </flux:label>
                                     <flux:input wire:key="email" wire:model="form.email" type="email" />
                                     <flux:error name="form.email" />
                                 </flux:field>
                             @elseif ($this->form->way_to_get_in_contact === 'other_contact')
-                                <flux:field>
+                                <flux:field wire:key="other_contact_field">
                                     <flux:label>{{ __('Contact Information') }}<span class="text-red-500">*</span>
                                     </flux:label>
                                     <flux:input wire:key="other_contact" wire:model="form.other_contact"
@@ -139,7 +138,7 @@
                                 <flux:error name="form.foreign_city" />
                             </flux:field>
                             @if ($this->form->foreign_city === null)
-                                <flux:input disabled placeholder="{{ __('Postal Code') }}">
+                                <flux:input wire:key="no_foreign_city" disabled placeholder="{{ __('Please select the field above') }}">
                                 </flux:input>
                             @endif
 
@@ -182,7 +181,7 @@
                                     </flux:field>
                                 @endif
                             @elseif (isset($this->form->foreign_city) && $this->form->foreign_city)
-                                <flux:field>
+                                <flux:field wire:key="city_field">
                                     <flux:label>{{ __('City') }}<span class="text-red-500">*</span>
                                     </flux:label>
                                     <flux:input wire:key="city" wire:model="form.city" type="text" />
@@ -221,7 +220,7 @@
                             @endif
 
                             @if ($this->form->form_fields->age)
-                                <flux:field>
+                                <flux:field wire:key="age_field">
                                     <flux:label>{{ __('Age') }}<span class="text-red-500">*</span>
                                     </flux:label>
                                     <flux:select wire:key="age" wire:model="form.age" variant="listbox"
@@ -246,7 +245,7 @@
                                 <flux:error name="form.decision" />
                             </flux:field>
                             @if ($this->form->form_fields->evangelist_name)
-                                <flux:field>
+                                <flux:field wire:key="evangelist_name_field">
                                     <flux:label>Name Evangelist<span class="text-red-500">*</span></flux:label>
                                     <flux:input wire:key="evangelist_name" wire:model="form.evangelist_name"
                                         type="text" autocomplete="name" />
@@ -266,9 +265,10 @@
                         @endif
 
 
-
+                        </form>
                     </flux:tab.panel>
                     <flux:tab.panel class="space-y-6" name="without_contact">
+                        <form wire:submit.prevent="addDecisions" class="space-y-6">
                         <flux:field>
                             <flux:label>{{ __('Number of Decisions') }}<span class="text-red-500">*</span>
                             </flux:label>
@@ -284,15 +284,16 @@
                                 <flux:error name="form.decision_evangelist_name" />
                             </flux:field>
                         @endif
-                        <flux:button type="button" wire:click="addDecisions"
+                        <flux:button type="button"
                             class="bg-cyan-700 hover:bg-cyan-800 w-full" variant="primary">
                             {{ __('Save') }}
                         </flux:button>
+                    </form>
                     </flux:tab.panel>
                 </flux:tab.group>
 
 
-            </form>
+            </div>
         @endif
         <flux:toast />
     </div>

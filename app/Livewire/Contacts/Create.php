@@ -104,6 +104,22 @@ class Create extends Component
         $this->form->postal_code = $newPostalCode->id;
     }
 
+    // Functions to show or hide elements
+    public function showDistrict() {
+        return $this->form->form_fields->district &&  $this->form->unknown_postal_code;
+    }
+
+    public function showPostalCode() {
+        return $this->form->form_fields->postal_code && !$this->form->unknown_postal_code;
+    }
+    public function showNotForeignCity() {
+        return isset($this->form->foreign_city) && !$this->form->foreign_city;
+    }
+
+    public function showCheckboxPostalCode() {
+        return $this->form->form_fields->postal_code && $this->form->form_fields->district;
+    }
+
     public function render()
     {
         return view('livewire.contacts.create');
