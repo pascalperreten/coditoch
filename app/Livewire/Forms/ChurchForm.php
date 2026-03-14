@@ -55,7 +55,7 @@ class ChurchForm extends Form
         $this->districts = $church->districts()->pluck('districts.id')->toArray();
         $this->languages = $church->languages()->pluck('languages.id')->toArray();
         $this->postal_codes = $church->postalCodes()->pluck('postal_codes.id')->toArray();
-        $this->event_id = $church->event_id;
+        //$this->event_id = $church->event_id;
     }
 
     public function create(Event $event) {
@@ -63,13 +63,15 @@ class ChurchForm extends Form
         $this->event_id = $event->id;
         $this->validate();
         $this->slug = Str::slug($this->name);
+        
 
         $church = Church::create(
-            $this->only(['name', 'city', 'street', 'postal_code', 'website_url', 'event_id', 'slug'])
+            $this->only(['name', 'city', 'street', 'postal_code', 'event_id', 'website_url', 'slug'])
         );
         $church->languages()->sync($this->languages);
         $church->districts()->sync($this->districts);
         $church->postalCodes()->sync($this->postal_codes);
+        $church->events()->attach($event->id);
         
 
         session()->flash('success', 'Church created successfully!');

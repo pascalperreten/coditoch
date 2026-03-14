@@ -28,17 +28,19 @@
                         </flux:tab>
                     </flux:tabs>
 
-                    <flux:tab.panel class="space-y-6" name="with_contact">
+                    <flux:tab.panel wire:key="with_contact_panel" class="space-y-6" name="with_contact">
                         @if (!$this->approved)
-                            <flux:heading>{{ __('Approval for sharing contact information') }}</flux:heading>
-                            <flux:text>
-                                {{ __('The person agrees that their contact details may be passed on to a local church.') }}
-                            </flux:text>
+                            <div class="space-y-6">
+                                <flux:heading>{{ __('Approval for sharing contact information') }}</flux:heading>
+                                <flux:text>
+                                    {{ __('The person agrees that their contact details may be passed on to a local church.') }}
+                                </flux:text>
 
-                            <flux:button wire:click="nextPage" class="bg-cyan-700 hover:bg-cyan-800 w-full"
-                                variant="primary">
-                                {{ __('Yes') }}
-                            </flux:button>
+                                <flux:button wire:click="nextPage" class="bg-cyan-700 hover:bg-cyan-800 w-full"
+                                    variant="primary">
+                                    {{ __('Yes') }}
+                                </flux:button>
+                            </div>
                         @else
                         <form wire:submit.prevent="save" class="space-y-6">
                             <flux:field>
@@ -220,7 +222,7 @@
                             @endif
 
                             @if ($this->form->form_fields->age)
-                                <flux:field wire:key="age_field">
+                                <div wire:key="age_field">
                                     <flux:label>{{ __('Age') }}<span class="text-red-500">*</span>
                                     </flux:label>
                                     <flux:select wire:key="age" wire:model="form.age" variant="listbox"
@@ -232,7 +234,7 @@
                                         <flux:select.option>Ü 65</flux:select.option>
                                     </flux:select>
                                     <flux:error name="form.age" />
-                                </flux:field>
+                                </div>
                             @endif
                             <flux:field>
                                 <flux:label>{{ __('The Person has made a decision for Christ.') }}<span

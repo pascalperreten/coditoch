@@ -36,6 +36,7 @@ use App\Livewire\Manage\Evangelize;
 use App\Livewire\Manage\FollowUp;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
+use App\Http\Controllers\RegisteredUserAndChurchController;
 
 
 Route::get('/mail', function () {
@@ -68,6 +69,7 @@ Route::middleware(['set.locale'])->group(function () {
 
     Route::livewire('{ministry}/invitation/{token}', InviteMember::class)->name('invitation');
     Route::livewire('{ministry}/{event}/invitation/church/{token}', InviteChurch::class)->name('invitation.church')->middleware('signed');
+    Route::post('{ministry}/{event}/invitation/church/{token}', [RegisteredUserAndChurchController::class, 'storeUserAndChurch'])->name('register.storeUserAndChurch');
     Route::livewire('{ministry}/{event}/evangelize', ContactCreate::class)->name('events.evangelize')->middleware('signed');
     Route::livewire('{ministry}/{event}/evangelize/gospel-shares', 'pages::evangelize.gospel-shares')->name('evangelize.gospel-shares')->middleware('signed');
     Route::livewire('{ministry}/{event}/{church}/evangelize', ContactCreate::class)->name('churches.evangelize')->middleware('signed');
@@ -78,7 +80,21 @@ Route::middleware(['set.locale'])->group(function () {
     })->name('home');
 
     Route::get('dashboard', function () {
-        return redirect()->route('ministry', auth()->user()->ministry);
+        $user = auth()->user();
+
+        $ministry = $user->ministry;
+
+        // if the user doesn’t have a ministry_id
+        if (!$ministry && $user->church) {
+
+            // pick the first ministry from the church's events
+            $ministry = $user->church->events()
+                ->with('ministry') // eager load
+                ->get()
+                ->pluck('ministry') // collect ministries
+                ->first(); // pick the first one
+        }
+        return redirect()->route('ministry', $ministry);
     })->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::prefix('{ministry}')->scopeBindings()->middleware(['auth', 'verified', 'ensure.ministry'])->group(function() {

@@ -38,6 +38,9 @@ class Church extends Model
     public function event(): BelongsTo {
         return $this->belongsTo(Event::class);
     }
+    public function events(): BelongsToMany {
+        return $this->belongsToMany(Event::class);
+    }
     public function members(): HasMany {
         return $this->hasMany(User::class);
     }

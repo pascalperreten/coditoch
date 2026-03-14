@@ -24,7 +24,10 @@ class EnsureCorrectMinistry
             abort(404);
         }
 
-        if ($user && $user->ministry->id !== $ministry->id) {
+        if ($user && $user->ministry && $user->ministry->id !== $ministry->id) {
+            abort(404);
+        }
+        if ($user && $user->church && !$user->church->events()->where('ministry_id', $ministry->id)->exists()) {
             abort(404);
         }
 

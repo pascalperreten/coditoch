@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\Ministry;
@@ -43,8 +44,8 @@ class Event extends Model
         return $this->belongsTo(Ministry::class);
     }
 
-    public function churches(): HasMany {
-        return $this->hasMany(Church::class);
+    public function churches(): BelongsToMany {
+        return $this->belongsToMany(Church::class);
     }
 
     public function followUpMembers(): BelongsToMany {

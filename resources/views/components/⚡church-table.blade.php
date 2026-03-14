@@ -25,10 +25,10 @@ new class extends Component {
 
     public function churches()
     {
-        return Church::where('event_id', $this->event->id)
-            ->where('name', 'like', "%{$this->search}%")
-            ->orderBy('name')
-            ->get();
+        return $this->event->churches()
+             ->where('name', 'like', "%{$this->search}%")
+             ->orderBy('name')
+             ->get();
     }
 
     public function searchReset()

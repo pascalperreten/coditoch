@@ -30,7 +30,7 @@ class Create extends Component
     }
 
     public function addChurchLink() {
-        return URL::signedRoute('invitation.church', [$this->ministry, $this->event, $this->event->invitation_token]);
+        return URL::signedRoute('register.storeUserAndChurch', [$this->ministry, $this->event, $this->event->invitation_token]);
     }
 
     public function render()

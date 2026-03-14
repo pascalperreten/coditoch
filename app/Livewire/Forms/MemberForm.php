@@ -89,6 +89,8 @@ class MemberForm extends Form
             'slug' => Str::slug($this->church_name),
         ]);
 
+        $church->events()->attach($event->id);
+
         $newMember = User::create([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -107,7 +109,7 @@ class MemberForm extends Form
         $this->reset('first_name', 'last_name', 'email', 'phone', 'role', 'church_name');
 
         // Logic to send invitation
-        $newMember->notify(new Invitation($newMember, $ministry));
+        $newMember->notify(new Invitation($newMember, $event->ministry));
     }
 
     public function create($ministry, $church) {
