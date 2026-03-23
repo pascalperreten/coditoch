@@ -19,8 +19,8 @@
     <div class="mt-6">
         @if (isset($this->form->postal_codes))
             @foreach ($this->form->postal_codes as $postal_code)
-                <livewire:postal-codes.item :event="$this->event" :postal_code="$postal_code"
-                    :wire:key="'postal_code-' . $postal_code->id" />
+                <livewire:postal-codes.item :event="$this->event" postal_code_id="{{ $postal_code->id }}"
+                    wire:key="postal_code-{{$postal_code->id }}" />
                 <flux:separator variant="subtle" class="my-3" />
             @endforeach
         @endif

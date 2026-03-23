@@ -49,18 +49,20 @@ class Member extends Component
         $this->user->update($this->only(['password', 'invitation_token']));
 
         Auth::login($this->user);
+        $this->user->sendEmailVerificationNotification();
+
         
         if($this->user->church_id) {
             if ($this->user->church->members()->count() <= 1) {
                 $this->user->church->update(['follow_up_contact' => $this->user->id]);
                 $this->dispatch('newChurchAdded');
-                return $this->redirect(route('churches.manage', [$this->user->ministry, $this->user->church->event, $this->user->church]), navigate: true);
+                return $this->redirect(route('churches.manage', [$this->user->church->event->ministry, $this->user->church->event, $this->user->church]), navigate: true);
             } else {
-                return $this->redirect(route('churches.show',[$this->user->ministry, $this->user->church->event, $this->user->church]), navigate: true);
+                return $this->redirect(route('churches.show',[$this->user->church->event->ministry, $this->user->church->event, $this->user->church]), navigate: true);
             }
         } elseif ($this->user->role === 'follow_up') { 
             $event = $this->user->events()->first();
-            return $this->redirect(route('events.show', [$this->user->ministry, $event]), navigate: true);
+            return $this->redirect(route('events.show', [$this->user->event->ministry, $event]), navigate: true);
         } else {
             return $this->redirect(route('dashboard'), navigate: true);
         }

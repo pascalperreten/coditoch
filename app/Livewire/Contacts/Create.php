@@ -39,6 +39,9 @@ class Create extends Component
     public bool $approved = false;
     public bool $contact_selected = false;
 
+    // This property is used to show or hide the input field when no contact method is selected
+    public $isContactEmpty = true;
+
     public function mount(Ministry $ministry, Event $event, Church $church = null) {
         $this->ministry = $ministry;
         $this->event = $event;
@@ -107,6 +110,12 @@ class Create extends Component
     // Functions to show or hide elements
     public function showDistrict() {
         return $this->form->form_fields->district &&  $this->form->unknown_postal_code;
+    }
+    public function getIsContactEmptyProperty(): bool {
+        dd('hey');
+        if ($this->form->way_to_get_in_contact !== '') {
+            $this->isContactEmpty =  false;
+        }
     }
 
     public function showPostalCode() {

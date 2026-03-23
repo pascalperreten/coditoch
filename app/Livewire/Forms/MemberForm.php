@@ -109,10 +109,10 @@ class MemberForm extends Form
         $this->reset('first_name', 'last_name', 'email', 'phone', 'role', 'church_name');
 
         // Logic to send invitation
-        $newMember->notify(new Invitation($newMember, $event->ministry));
+        $newMember->notify(new Invitation($newMember, $event->ministry, $event));
     }
 
-    public function create($ministry, $church) {
+    public function create($ministry, $church, $event = null) {
 
         $ministry_id = $ministry->id;
         if($church) {
@@ -145,7 +145,7 @@ class MemberForm extends Form
         }
 
         // Logic to send invitation
-        $newMember->notify(new Invitation($newMember, $ministry));
+        $newMember->notify(new Invitation($newMember, $ministry, $event));
     }
 
     public function validateOnlyStep(array $fields)

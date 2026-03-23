@@ -7,17 +7,28 @@ use App\Models\Language;
 use App\Models\Event;
 use Livewire\Attributes\Validate;
 use App\Livewire\Forms\LanguageForm;
+use Flux\Flux;
 
 class Item extends Component
 {
     public LanguageForm $form;
-    public Language $language;
+    public ?int $language_id;
 
-    public function mount($language, $event) {
+    public function mount($language_id, $event) {
+        $this->language_id = $language_id;
         $this->form->event = $event;
-        $this->language = $language;
-        $this->form->name = $language->translation->name;
-        $this->form->language = $this->language;
+        $language = $this->language();
+
+        if ($language === null) {
+            return;
+        }
+
+        $this->form->name = $language->translation?->name ?? '';
+        $this->form->language = $language;
+    }
+
+    public function language(): ?Language {
+        return Language::find($this->language_id);
     }
 
     public function editItem($id) {
@@ -31,8 +42,14 @@ class Item extends Component
     }
 
     public function deleteLanguage($id) {
+        Flux::modals()->close();
         $this->form->deleteLanguage($id);
         $this->dispatch('updateLanguages');
+        Flux::toast(
+            heading: __('Language deleted'),
+            text: __('The language has been deleted successfully.'),
+            variant: 'success',
+        );
     }
 
      public function render()

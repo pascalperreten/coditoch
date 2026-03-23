@@ -19,8 +19,7 @@ class FollowUp extends Component
     public bool $age;
     public bool $gender;
     public bool $evangelist_name;
-    public bool $district;
-    public bool $postal_code;
+    public bool $location;
 
 
     public function mount(Ministry $ministry, Event $event) {
@@ -32,8 +31,7 @@ class FollowUp extends Component
         $this->age = $this->manage_follow_up->age;
         $this->gender = $this->manage_follow_up->gender;  
         $this->evangelist_name = $this->manage_follow_up->evangelist_name;  
-        $this->district = $this->manage_follow_up->district;
-        $this->postal_code = $this->manage_follow_up->postal_code;
+        $this->location = $this->manage_follow_up->location;
         $this->event_id = $this->event->id;
     }
 

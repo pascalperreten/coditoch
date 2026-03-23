@@ -7,10 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class Test extends Notification
+class MinistryInvitation extends Notification
 {
     use Queueable;
-    protected $name = 'Pascal';
 
     /**
      * Create a new notification instance.
@@ -36,11 +35,9 @@ class Test extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->greeting(__('Hello') . ' ' . $this->name . '!')
-            ->line('test.')
+            ->line('The introduction to the notification.')
             ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!')
-            ->salutation('Best regards, Connect2Life Team');
+            ->line('Thank you for using our application!');
     }
 
     /**

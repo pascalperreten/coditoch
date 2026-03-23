@@ -29,7 +29,7 @@ class Create extends Component
     public function sendInvitation()
     {
         if(!$this->churchInvitation) {
-            $this->form->create($this->ministry, $this->church);
+            $this->form->create($this->ministry, $this->church, $this->event);
             session()->flash('success', __('Invitation sent!'));
 
             if($this->church?->id) {

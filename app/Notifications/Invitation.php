@@ -8,19 +8,22 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\User;
 use App\Models\Ministry;
+use App\Models\Event;
 
 class Invitation extends Notification implements ShouldQueue
 {
     use Queueable;
     public User $newMember;
     public Ministry $ministry;
+    public Event $event;
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $newMember, Ministry $ministry)
+    public function __construct(User $newMember, Ministry $ministry, Event $event)
     {
         $this->newMember = $newMember;
         $this->ministry = $ministry;
+        $this->event = $event;
     }
 
     /**
@@ -39,12 +42,12 @@ class Invitation extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Neue Kontakte')
-            ->greeting('Hallo ' . $this->newMember->first_name)
-            ->line('Bitte klicke auf den Link unten, um dein Konto einzurichten.')
-            ->action('Jetzt Konto einrichten', url(route('invitation', [$this->ministry, $this->newMember->invitation_token])))
-            ->line('Danke!')
-            ->salutation('Mit freundlichen Grüßen, das ' . $this->ministry->name . '-Team');
+            ->subject(__('Invitation to') . ' ' . $this->event->name . ' ' . $this->event->city)
+            ->greeting(__('Hello') . ' ' . $this->newMember->first_name)
+            ->line(__('Please click the link below to set up your account.'))
+            ->action(__('Set up your account now'), url(route('invitation', [$this->ministry, $this->newMember->invitation_token])))
+            ->line(__('Thank you!'))
+            ->salutation(__('Best regards, the') . ' ' . $this->ministry->name . ' ' . __('Team'));
     }
 
     /**

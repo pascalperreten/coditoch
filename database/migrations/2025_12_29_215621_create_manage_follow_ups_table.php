@@ -16,8 +16,7 @@ return new class extends Migration
             $table->boolean('language');
             $table->boolean('age');
             $table->boolean('gender');
-            $table->boolean('district');
-            $table->boolean('postal_code');
+            $table->boolean('location');
             $table->boolean('evangelist_name');
             $table->boolean('church_evangelize');
             $table->boolean('assign_directly');

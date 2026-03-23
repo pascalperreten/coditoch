@@ -31,7 +31,6 @@ class ContactForm extends Form
     public array $language = [];
     public array $districts = [];
     public $district = '';
-    public array $postal_codes = [];
     public $postal_code = '';
     public $unknown_postal_code = false;
     public string $age = '';
@@ -65,9 +64,9 @@ class ContactForm extends Form
 
     public function setContactForm($event) {
         $this->form_fields = ManageFollowUp::where('event_id', $event->id)->first();
-        if(!$this->form_fields->postal_code && $this->form_fields->district) {
-            $this->unknown_postal_code = true;
-        }
+        // if(!$this->form_fields->postal_code && $this->form_fields->district) {
+        //     $this->unknown_postal_code = true;
+        // }
     }
     
     public function setContact(Contact $contact) {
@@ -88,7 +87,6 @@ class ContactForm extends Form
         
         $this->language = $contact->languages()->pluck('languages.id')->toArray();
         $this->districts = $contact->district()->pluck('districts.id')->toArray();
-        $this->postal_codes = $contact->postalCode()->pluck('postal_codes.id')->toArray();
         if($contact->age) {
             $this->age = $contact->age;
         }
@@ -178,11 +176,10 @@ class ContactForm extends Form
             $validate[] = 'city';
         }
         else {
-            if ($this->form_fields->postal_code && !$this->unknown_postal_code) {
+            if ($this->form_fields->location && !$this->unknown_postal_code) {
                 $validate[] = 'postal_code';
             }
-
-            if($this->form_fields->district && $this->unknown_postal_code) {
+            if($this->form_fields->location && $this->unknown_postal_code) {
                 $validate[] = 'district';
             } 
         } 
@@ -206,16 +203,6 @@ class ContactForm extends Form
         }
 
         $this->validateOnlyStep($validate);
-
-        if(in_array('postal_code', $validate)) {
-            $existing_postal_code = $event->postalCodes()->where('name', $this->postal_code)->first();
-            if($existing_postal_code) {
-                $this->postal_code = $existing_postal_code->id;
-            } else { 
-                $new_postal_code = $event->postalCodes()->create(['name' => $this->postal_code]);
-                $this->postal_code = $new_postal_code->id;
-            }
-        }
         
         if($this->city === '') {
             $this->city = $event->city;
@@ -243,6 +230,15 @@ class ContactForm extends Form
         }
 
         if($this->postal_code !== '') {
+            $existing_postal_code = $event->postalCodes()->where('name', $this->postal_code)->first();
+
+            if($existing_postal_code) {
+                $this->postal_code = $existing_postal_code->id;
+            } else {
+                $new_postal_code = $event->postalCodes()->create(['name' => $this->postal_code]);
+                $this->postal_code = $new_postal_code->id;
+            }
+
             $contact->postalCode()->sync($this->postal_code);
         }
         

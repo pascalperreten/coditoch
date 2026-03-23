@@ -40,6 +40,7 @@ use App\Http\Controllers\RegisteredUserAndChurchController;
 
 
 Route::get('/mail', function () {
+    app()->setLocale('de');
     $user = User::first();
     $notification = new App\Notifications\Test();
     return $notification->toMail($user)->render();

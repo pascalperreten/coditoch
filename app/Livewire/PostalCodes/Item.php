@@ -11,13 +11,17 @@ use App\Livewire\Forms\PostalCodeForm;
 class Item extends Component
 {
     public PostalCodeForm $form;
-    public PostalCode $postal_code;
+    public ?int $postal_code_id = null;
 
-    public function mount($postal_code, $event) {
+    public function mount($postal_code_id, $event) {
         $this->form->event = $event;
-        $this->postal_code = $postal_code;
-        $this->form->name = $postal_code->name;
-        $this->form->postal_code = $this->postal_code;
+        $this->postal_code_id = $postal_code_id;
+        $this->form->name = $this->postal_code()?->name;
+        $this->form->postal_code = $this->postal_code();
+    }
+
+    public function postal_code(): ?PostalCode {
+        return PostalCode::find($this->postal_code_id);
     }
 
     public function editItem($id) {

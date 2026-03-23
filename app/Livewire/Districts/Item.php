@@ -13,14 +13,25 @@ class Item extends Component
 {
     public DistrictForm $form;
 
-    public District $district;
+    public ?int $district_id = null;
 
-    public function mount($district, $event) {
+    public function mount($district_id, $event) {
         $this->form->event = $event;
-        $this->district = $district;
+        $this->district_id = $district_id;
+
+        $district = $this->district();
+
+        if ($district === null) {
+            return;
+        }
         $this->form->name = $district->name;
-        $this->form->district = $this->district;
+        $this->form->district = $district;
     }
+
+    public function district(): ?District {
+        return District::find($this->district_id);
+    }
+
 
     public function editItem($id) {
         $this->form->editItem($id);
@@ -28,7 +39,7 @@ class Item extends Component
 
 
     public function updateDistrict($id) {
-        $this->form->update($this->district);
+        $this->form->update($this->district());
         $this->dispatch('updateDistricts');
     }
 
@@ -38,7 +49,7 @@ class Item extends Component
     }
 
     public function updated() {
-        $this->form->update($this->district);
+        $this->form->update($this->district());
     } 
 
     public function render()

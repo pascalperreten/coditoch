@@ -6,14 +6,11 @@
             <flux:tab name="link">Link</flux:tab>
         </flux:tabs>
         <flux:tab.panel name="form">
-
             <livewire:church-form :ministry="$this->ministry" :event="$this->event" />
         </flux:tab.panel>
         <flux:tab.panel name="email">
-            <flux:card class="flex items-center justify-center">
-                <livewire:members.create :event="$this->event" :ministry="$this->ministry" :churchInvitation="true"
-                    title="{{ __('Invite Church') }}" />
-            </flux:card>
+            <livewire:members.create :event="$this->event" :ministry="$this->ministry" :churchInvitation="true"
+                title="{{ __('Invite Church') }}" />
         </flux:tab.panel>
         <flux:tab.panel name="link">
             <div class="space-y-6">

@@ -19,8 +19,7 @@
     <div class="mt-6">
         @if (isset($this->form->languages))
             @foreach ($this->form->languages as $language)
-                <livewire:languages.item :event="$this->event" :language="$language" :wire:key="'language-' . $language->id" />
-                <flux:separator variant="subtle" class="my-3" />
+                <livewire:languages.item wire:key="language-{{ $language->id }}" :event="$this->event" :language_id="$language->id" />
             @endforeach
         @endif
     </div>

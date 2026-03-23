@@ -19,7 +19,7 @@
     <div class="mt-6">
         @if (isset($this->form->districts))
             @foreach ($this->form->districts as $district)
-                <livewire:districts.item :event="$this->event" :district="$district" :wire:key="'district-' . $district->id" />
+                <livewire:districts.item :event="$this->event" district_id="{{ $district->id }}" wire:key="district-{{$district->id}}" />
                 <flux:separator variant="subtle" class="my-3" />
             @endforeach
         @endif
