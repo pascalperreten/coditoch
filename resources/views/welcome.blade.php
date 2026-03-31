@@ -37,7 +37,7 @@
         <main class="flex justify-center flex-col space-y-6">
             <div class="bg-[#2d333b] p-10 rounded-lg w-4xl mx-auto">
                 <div class="max-w-100 mx-auto">
-                    <img src="{{ asset('storage/images/coditoch_logo_1024.png') }}" alt="Welcome Illustration" class="w-full max-w-md">
+                    <img src="{{ Storage::disk('s3')->url('images/coditoch_logo_1024.png') }}" alt="Welcome Illustration" class="w-full max-w-md">
                 </div>
             </div>
 
