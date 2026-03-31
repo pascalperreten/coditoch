@@ -51,14 +51,12 @@
             @else
                 @can('create', App\Models\User::class)
                     <flux:card class="space-y-6 text">
-                        <flux:heading class="text-center" size="lg">Du hast noch keine Events!</flux:heading>
-                        <flux:text class="text-center">Erstelle jetzt deinen ersten Event und fange an Kontakte zu sammeln
-                        </flux:text>
+                        <flux:heading class="text-center" size="lg">{{ __('You have no events yet!') }}</flux:heading>
+                        <flux:text class="text-center">{{ __('Create your first event now and start collecting contacts.') }}</flux:text>
                         <div class="flex justify-center">
                             <flux:button wire:navigate
                                 href="{{ route('events.index', [$this->ministry, 'q' => 'create']) }}" wire:navigate>
-                                Event
-                                erstellen
+                                {{ __('Create Event') }}
                             </flux:button>
                         </div>
                     </flux:card>

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('role', ['admin', 'editor', 'follow_up', 'pastor', 'ambassador', 'church_member'])->default('admin');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
+            $table->string('locale')->default('en');
             $table->string('avatar_path')->nullable();
             $table->string('avatar_name')->nullable();
             $table->string('invitation_token')->nullable();

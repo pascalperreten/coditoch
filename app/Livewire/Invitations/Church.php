@@ -42,29 +42,6 @@ class Church extends Component
         $this->role = (string) old('role', $user->role ?? '');
     }
 
-    // public function rules() {
-    //     return [
-    //         'first_name' => 'required|string|max:255',
-    //         'last_name' => 'required|string|max:255',
-    //         'email' => [
-    //             'required',
-    //             'email',
-    //             'max:255',
-    //             Rule::unique('users', 'email')
-    //             ],
-    //         'password' => 'required|string|min:8|confirmed',
-    //         'password_confirmation' => 'required',
-    //         'church_name' => [
-    //             'required',
-    //             'string',
-    //             'max:255',
-    //             Rule::unique('churches', 'name')->where('event_id', $this->event->id),
-    //         ],
-    //         'phone' => 'required|string|max:255',
-    //         'role' => 'required|string|max:30',
-    //     ];
-    // }
-
     public function registerChurch()
     {
 
@@ -80,37 +57,7 @@ class Church extends Component
             'event_id' => $this->event->id,
         ]);
 
-        
-        
-        // $user = User::create([
-        //     'first_name' => $this->first_name,
-        //     'last_name' => $this->last_name,
-        //     'email' => $this->email,
-        //     'phone' => $this->phone,
-        //     'role' => $this->role,
-        //     'password' => $this->password,
-        //     'ministry_id' => $this->ministry->id,
-        // ]);
-
-        $church = ChurchModel::create([
-            'name' => $this->church_name,
-            'street' => '',
-            'postal_code' => '',
-            'city' => '',
-            'event_id' => $this->event->id,
-            'follow_up_contact' => $user->id,
-            'slug' => Str::slug($this->church_name),
-        ]);
-
-        $user->update([
-            'church_id' => $church->id,
-        ]);
-
-        $church->events()->attach($this->event->id);
-
-        Auth::login($user);
-
-        return redirect()->route('churches.manage', [$this->ministry, $this->event, $church]);
+        //return redirect()->route('churches.manage', [$this->ministry, $this->event, $church], navigate: true);
     }
     public function render()
     {

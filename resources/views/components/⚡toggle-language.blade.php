@@ -9,22 +9,21 @@ new class extends Component {
 
     public function mount()
     {
-        $this->locale = Cookie::get('locale', config('app.locale'));
+        $this->locale = auth()->check() ? auth()->user()->locale : Cookie::get('locale', config('app.locale'));
         App::setLocale($this->locale);
     }
 
     public function switchLanguage($lang)
     {
-        App::setLocale($lang);
-        //session()->put(['locale' => $lang]);
+        if (auth()->check()) {
+            auth()->user()->update(['locale' => $lang]);
+        }
 
         Cookie::queue(Cookie::forever('locale', $lang));
-        return $this->redirect(url()->previous(), navigate: true);
-    }
 
-    public function checkLocale()
-    {
-        dd(app()->getLocale());
+        //$this->locale = $lang;
+        return $this->redirect(request()->header('Referer') ?? url('/'), navigate: true);
+;
     }
 };
 ?>

@@ -9,6 +9,8 @@ use App\Models\Event;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class CreateNewUserAndChurch implements CreatesNewUsers
 {
@@ -44,6 +46,7 @@ class CreateNewUserAndChurch implements CreatesNewUsers
             'email' => $input['email'],
             'password' => $input['password'],
             'role' => $input['role'],
+            'locale' => config('app.locale'),
             'phone' => $input['phone'],
         ]);
 

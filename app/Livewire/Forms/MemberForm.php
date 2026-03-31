@@ -98,6 +98,7 @@ class MemberForm extends Form
             'phone' => $this->phone,
             'role' => $this->role,
             'church_id' => $church->id,
+            'locale' => config('app.locale'),
             'invitation_token' => Str::random(32),
         ]);
 
@@ -109,7 +110,7 @@ class MemberForm extends Form
         $this->reset('first_name', 'last_name', 'email', 'phone', 'role', 'church_name');
 
         // Logic to send invitation
-        $newMember->notify(new Invitation($newMember, $event->ministry, $event));
+        $newMember->notify(new Invitation($newMember, $event->ministry, $event)->locale(app()->getLocale()));
     }
 
     public function create($ministry, $church, $event = null) {
@@ -133,6 +134,7 @@ class MemberForm extends Form
             'role' => $this->role,
             'ministry_id' => $ministry_id,
             'church_id' => $this->church_id,
+            'locale' => config('app.locale'),
             'invitation_token' => Str::random(32),
         ]);
 
@@ -145,7 +147,7 @@ class MemberForm extends Form
         }
 
         // Logic to send invitation
-        $newMember->notify(new Invitation($newMember, $ministry, $event));
+        $newMember->notify(new Invitation($newMember, $ministry, $event)->locale(app()->getLocale()));
     }
 
     public function validateOnlyStep(array $fields)
