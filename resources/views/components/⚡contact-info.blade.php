@@ -8,7 +8,7 @@ new class extends Component {
 ?>
 
 <div>
-    <flux:dropdown position="right" align="middle">
+    <flux:dropdown position="top" align="middle">
 
         <flux:button class="cursor-pointer" icon:trailing="chat-bubble-oval-left-ellipsis"></flux:button>
         <flux:menu keep-open>
