@@ -24,7 +24,9 @@ new class extends Component {
 <div>
     @if ($this->ministry && $this->ministry->logo_path)
         <div class="w-30 md:w-50 flex justify-center">
-            <img class="max-h-10 max-w-full" src="{{ Storage::disk('s3')->url($this->path) }}">
+            <a href="{{ auth()->user() ? route('dashboard', [$this->ministry]) : '#' }}">
+                <img class="max-h-10 max-w-full" src="{{ Storage::disk('s3')->url($this->path) }}">
+            </a>
         </div>
     @endif
 </div>

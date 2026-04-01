@@ -93,6 +93,10 @@ new class extends Component {
         }
     }
 
+    public function refreshContacts() {
+        $this->contacts();
+    }
+
     #[Computed]
     public function contacts()
     {
@@ -102,7 +106,7 @@ new class extends Component {
             if (auth()->user()->role === 'church_member') {
                 return Contact::query()->where('church_id', $this->church->id)->whereHas('followUpPerson', fn($query) => $query->where('id', auth()->user()->id))->tap(fn($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(20);
             } else {
-                return Contact::query()->where('church_id', $this->church->id)->tap(fn($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(20);
+                return Contact::query()->where('church_id', $this->church->id)->where('assigned', true)->tap(fn($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(20);
             }
         }
     }
@@ -130,9 +134,22 @@ new class extends Component {
                 <flux:table.column sortable :sorted="$sortBy === 'met'" :direction="$sortDirection"
                     wire:click="sort('met')">{{ __('Meeting') }}</flux:table.column>
                 <flux:table.column>{{ __('Church') }}</flux:table.column>
+                <flux:table.column></flux:table.column>
+                <flux:table.column></flux:table.column>
             </flux:table.columns>
 
-            <flux:table.rows>
+            <flux:table.rows wire:poll.10s="refreshContacts">
+
+                @if ($this->contacts()->count() <= 0)
+                <flux:table.row wire:key="no-contacts">
+                    <flux:table.cell colspan="100%">
+                        <flux:text class="text-center italic">
+                            {{ __('No contacts have been added yet.') }}
+                        </flux:text>
+                    </flux:table.cell>
+                </flux:table.row>
+                @endif
+                
                 @foreach ($this->contacts() as $contact)
                     <flux:table.row wire:key="contact-{{ $contact->id }}">
                         <flux:table.cell>{{ $this->setDate($contact->created_at) }}</flux:table.cell>
@@ -336,6 +353,11 @@ new class extends Component {
                                     :contact="$contact" />
                             </flux:table.cell>
                         @endif
+                        @can ('update', $contact)
+                            <flux:table.cell class="text-end" inset="top-bottom">
+                                <flux:button icon="pencil-square" wire:key="edit-{{ $contact->id }}" href="{{ route('contacts.edit', [$this->event->ministry, $this->event, $contact]) }}" wire:navigate />
+                            </flux:table.cell>
+                        @endcan
 
                     </flux:table.row>
                 @endforeach

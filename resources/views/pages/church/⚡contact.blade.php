@@ -24,8 +24,11 @@ new class extends Component {
         } else {
             $this->badgeNumber = $this->church->contacts()->count();
         }
-
     }
+
+    public function getCount() {
+            return $this->church->contacts->count();
+        }
 
 
 };
@@ -58,14 +61,7 @@ new class extends Component {
     </div>
     <livewire:church-nav :ministry="$this->ministry" :event="$this->event" :church="$this->church">
         <div class="space-y-6">
-            @if ($this->church->contacts->count() > 0)
-                <livewire:contacts-table :church="$this->church" variant="church" />
-            @else
-                <flux:text>
-                    {{ __('No contacts have been added to this church yet.') }}
-                </flux:text>
-            @endif
-
+            <livewire:contacts-table :church="$this->church" :event="$this->event" variant="church" />
         </div>
     </livewire:church-nav>
 

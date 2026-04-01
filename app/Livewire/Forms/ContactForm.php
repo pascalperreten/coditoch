@@ -111,7 +111,7 @@ class ContactForm extends Form
         if ($contact->way_to_get_in_contact === 'other_contact') {
             $this->other_contact = $contact->other_contact;
         }
-        $this->foreign_city = $contact->foreign_city;
+        $this->foreign_city = $contact->foreign_city ? '1' : '0';
         $this->decision = $contact->decision;
         if($contact->evangelist_name) {
             $this->evangelist_name = $contact->evangelist_name;

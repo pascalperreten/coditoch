@@ -25,7 +25,7 @@ new class extends Component
     public ?Contact $currentContact = null;
     public $showChurches = false;
     //public $newContacts = [];
-    public $newForeignContacts;
+    //public $newForeignContacts;
     public $withChurches = [];
     public $form_fields;
 
@@ -33,7 +33,7 @@ new class extends Component
     public function mount(Ministry $ministry, Event $event) {
         $this->event = $event;
         $this->form_fields = ManageFollowUp::where('event_id', $event->id)->first();
-        $this->setNewForeignContacts();
+        //$this->setNewForeignContacts();
     }
 
     public $sortBy = 'created_at';
@@ -76,8 +76,10 @@ new class extends Component
         ->where('event_id', $this->event->id)
         ->get();
     }
-    public function setNewForeignContacts() {
-        $this->newForeignContacts =  Contact::where('assigned', false)->where('event_id', $this->event->id)->where('foreign_city', true)->get();
+
+    #[Computed]
+    public function newForeignContacts() {
+        return Contact::where('assigned', false)->where('event_id', $this->event->id)->where('foreign_city', true)->get();
     }
 
     public function closeAndResetChurches() {
@@ -130,7 +132,7 @@ new class extends Component
             'church_name' => $this->church_name,
         ]);
         Flux::modals()->close();
-        $this->setNewForeignContacts();
+
         Flux::toast(
             heading: __('Contact assigned'),
             text: __('The contact has been successfully assigned to the church.'),

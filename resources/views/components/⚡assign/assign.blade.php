@@ -94,8 +94,8 @@
                 </flux:table.columns>
 
                 <flux:table.rows>
-                    <div wire:poll.500ms>
-                        @foreach ($this->newContacts() as $contact)
+                    <div wire:poll.10s>
+                        @foreach ($this->newContacts as $contact)
                             <flux:table.row
                                 class="{{ isset($this->currentContact) && $this->currentContact->id === $contact->id ? 'bg-orange-700/10' : '' }}"
                                 wire:key="contact-{{ $contact->id }}">
@@ -201,9 +201,9 @@
                         <flux:table.column></flux:table.column>
                     </flux:table.columns>
 
-                    <flux:table.rows>
+                    <flux:table.rows wire:poll.10s>
 
-                        @foreach ($newForeignContacts as $contact)
+                        @foreach ($this->newForeignContacts as $contact)
                             <flux:table.row>
 
                                 <flux:table.cell>
