@@ -44,6 +44,9 @@ class ChurchForm extends Form
     #[Validate('required|integer|exists:events,id')]
     public $event_id;
 
+    #[Validate('required|string')]
+    public $description;
+
     public $slug = '';
 
     public function setChurch(Church $church) {
@@ -56,6 +59,7 @@ class ChurchForm extends Form
         $this->languages = $church->languages()->pluck('languages.id')->toArray();
         $this->postal_codes = $church->postalCodes()->pluck('postal_codes.id')->toArray();
         $this->event_id = $church->event_id;
+        $this->description = $church->description;
     }
 
     public function create(Event $event) {
@@ -82,7 +86,7 @@ class ChurchForm extends Form
         $this->validate();
 
         $church->update(
-            $this->only(['name', 'city', 'street', 'postal_code', 'website_url'])
+            $this->only(['name', 'city', 'street', 'postal_code', 'website_url', 'description'])
         );
         $church->languages()->sync($this->languages);
         $church->districts()->sync($this->districts);

@@ -10,6 +10,7 @@ new class extends Component {
     public Event $event;
     public $decisions;
     public $gospel_shares;
+    public $total_gospel_shares;
     public $contacts_decided;
     public $decisions_without_contact_details;
     public $contacts_not_decided;
@@ -36,6 +37,8 @@ new class extends Component {
         $this->part_of_church = $this->ministry->contacts->where('part_of_church', true)->where('invalid_contact_details', false)->count();
         $this->not_interested = $this->ministry->contacts->where('not_interested', true)->where('invalid_contact_details', false)->count();
         $this->invalid_contact_details = $this->ministry->contacts->where('invalid_contact_details', true)->count();
+
+
 
         $this->decisions_data = [['name' => __('Total'), 'value' => $this->decisions], ['name' => __('With contact details'), 'value' => $this->contacts_decided], ['name' => __('Without contact details'), 'value' => $this->decisions_without_contact_details]];
 

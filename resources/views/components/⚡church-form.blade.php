@@ -88,17 +88,6 @@ new class extends Component {
 
 <div>
     <form wire:submit.prevent="save" class="space-y-6">
-        @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->getMessages() as $field => $messages)
-                @foreach ($messages as $message)
-                    <li><strong>{{ $field }}:</strong> {{ $message }}</li>
-                @endforeach
-            @endforeach
-        </ul>
-    </div>
-@endif
 
         <flux:field>
             <flux:label>{{ __('Name Church') }}</flux:label>
@@ -166,6 +155,15 @@ new class extends Component {
                 @endforeach
 
         </flux:pillbox>
+
+        <flux:field>
+            <flux:label>{{ __('Description') }}</flux:label>
+            <flux:description>{{ __('Please briefly describe your church (distinctive features, things that are good to know)') }}</flux:description>
+
+            <flux:textarea wire:model="form.description" />
+
+            <flux:error name="form.description" />
+        </flux:field>
 
         <flux:field>
             <flux:label>{{ __('Website Url') }}</flux:label>

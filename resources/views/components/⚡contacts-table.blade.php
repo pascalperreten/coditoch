@@ -177,6 +177,11 @@ new class extends Component {
                                             {{ __('This person has not made a decision for Christ yet!') }}
                                         </flux:text>
                                     @endif
+                                    <flux:heading size="lg">{{ __('Gender') }}</flux:heading>
+                                    <flux:text>
+                                        {{ $contact->gender === 'male' ? __('Male') : __('Female') }}
+                                    </flux:text>
+                                    <flux:separator />
                                     <flux:heading size="lg">{{ __('Address') }}</flux:heading>
                                     <flux:text>
                                         {{ __('City') . ': ' }}

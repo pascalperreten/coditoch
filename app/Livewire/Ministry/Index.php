@@ -41,7 +41,7 @@ class Index extends Component
     }
 
     public function newContacts($event) {
-        $newContacts = Contact::where('event_id' , $event->id)->where('church_id', null)->first();
+        $newContacts = Contact::where('event_id' , $event->id)->where('assigned', false)->first();
         return $newContacts;
     }
 

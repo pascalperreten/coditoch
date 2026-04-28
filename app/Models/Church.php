@@ -31,6 +31,7 @@ class Church extends Model
         'districts',
         'slug',
         'follow_up_contact',
+        'description',
     ];
 
    
