@@ -7,12 +7,13 @@
 
 <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] flex flex-col text-[#1b1b18] min-h-screen">
     <flux:header container class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 mb-8 flex items-center justify-center">
-        <div class="grid grid-cols-3 w-full items-center">           
+        <div class="sm:grid flex sm:grid-cols-3 w-full items-center">           
             <div class="justify-self-start">
                 <livewire:toggle-language />
             </div>
 
-            <div class="justify-self-center">
+            <flux:spacer class="sm:hidden" />
+            <div class="justify-self-center hidden sm:block">
                 <img src="{{ asset('favicon-96x96.png') }}" alt="Coditoch Logo" class="max-h-10 w-auto">
             </div>
 

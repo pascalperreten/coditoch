@@ -18,7 +18,7 @@
             </flux:button>
         @endif --}}
         <flux:button onclick="window.location.reload()" variant="primary" class="mt-6 cursor-pointer">
-            {{ __('Back') }}
+            {{ __('Reload Page') }}
         </flux:button>
         
     </div>

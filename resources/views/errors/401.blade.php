@@ -17,7 +17,7 @@
                 {{ __('Go Home') }}
             </flux:button>
         @endif --}}
-        <flux:button onclick="history.back()" variant="primary" class="mt-6 cursor-pointer">
+        <flux:button href="{{ route('dashboard') }}" variant="primary" class="mt-6 cursor-pointer">
             {{ __('Back') }}
         </flux:button>
         
