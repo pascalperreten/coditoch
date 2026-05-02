@@ -14,7 +14,7 @@
                         <div class="flex gap-4">
                             @if (count($this->plzChurches) >= 1)
                                 @foreach ($this->plzChurches as $church)
-                                    <div class="flex items-center gap-2 border rounded-sm px-3 py-2">
+                                    <div class="flex items-center gap-2 border rounded-sm px-3 py-2 flex-wrap">
                                         <div>
                                             <flux:tooltip toggleable>
                                                 <flux:button class="text-white!" icon="information-circle" variant="ghost" size="sm" />
@@ -40,7 +40,7 @@
                         <div class="flex gap-4">
                             @if (count($this->districtChurches) >= 1)
                                 @foreach ($this->districtChurches as $church)
-                                    <div class="flex items-center gap-2 border rounded-sm px-3 py-2">
+                                    <div class="flex items-center gap-2 border rounded-sm px-3 py-2 flex-wrap">
                                         <div>
                                             <flux:tooltip toggleable>
                                                 <flux:button class="text-white!" icon="information-circle" variant="ghost" size="sm" />
@@ -66,7 +66,7 @@
                         <div class="flex gap-4">
                             @if (count($this->languageChurches) >= 1)
                                 @foreach ($this->languageChurches as $church)
-                                    <div class="flex items-center gap-2 border rounded-sm px-3 py-2">
+                                    <div class="flex items-center gap-2 border rounded-sm px-3 py-2 flex-wrap">
                                         <div>
                                             <flux:tooltip toggleable>
                                                 <flux:button class="text-white!" icon="information-circle" variant="ghost" size="sm" />
