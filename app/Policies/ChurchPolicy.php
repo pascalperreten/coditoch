@@ -29,7 +29,7 @@ class ChurchPolicy
     } 
 
     public function create(User $authUser) {
-            return in_array($authUser->role, ['admin']);
+        return in_array($authUser->role, ['admin']);
     }
 
     public function update(User $authUser, Church $church) {

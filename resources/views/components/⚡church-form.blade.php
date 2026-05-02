@@ -201,8 +201,10 @@ new class extends Component {
                     </flux:modal>
                 @endcan
             @else
-                <flux:button variant="primary" type="submit">{{ __('Create Church') }}
-                </flux:button>
+                @can('create', \App\Models\Church::class)
+                    <flux:button variant="primary" type="submit">{{ __('Create Church') }}
+                    </flux:button>
+                @endcan
             @endif
         </div>
     </form>

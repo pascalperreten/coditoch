@@ -31,13 +31,21 @@ new class extends Component {
 ?>
 
 
-<flux:select wire:model.change="contact_church" variant="listbox" placeholder="{{ __('Select a church') }}">
+<flux:select class="min-w-[20rem]" wire:model.change="contact_church" variant="listbox" placeholder="{{ __('Select a church') }}">
 
     @if (count($this->event->churches) >= 1)
         @foreach ($this->event->churches as $church)
             <div class="flex gap-2 py-2">
-                <flux:select.option wire:key="{{ $church->id }}" value="{{ $church->id }}">
-                    <span class="px-2 text-nowrap">{{ $church->name }}</span>
+                <div>
+                    <flux:tooltip toggleable>
+                        <flux:button icon="information-circle" variant="ghost" size="sm" />
+                        <flux:tooltip.content class="max-w-[18rem]">
+                            <p>{{ $church->description }}</p>
+                        </flux:tooltip.content>
+                    </flux:tooltip>
+                </div>
+                <flux:select.option class="p-0" wire:key="{{ $church->id }}" value="{{ $church->id }}">
+                    {{ $church->name }}
                 </flux:select.option>
                 <flux:badge icon="user">
                     {{ $this->getContactNumber($church->id) }}

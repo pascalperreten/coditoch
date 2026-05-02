@@ -15,6 +15,14 @@
                             @if (count($this->plzChurches) >= 1)
                                 @foreach ($this->plzChurches as $church)
                                     <div class="flex items-center gap-2 border rounded-sm px-3 py-2">
+                                        <div>
+                                            <flux:tooltip toggleable>
+                                                <flux:button class="text-white!" icon="information-circle" variant="ghost" size="sm" />
+                                                <flux:tooltip.content class="max-w-[20rem] space-y-2">
+                                                    <p>{{ $church->description }}</p>
+                                                </flux:tooltip.content>
+                                            </flux:tooltip>
+                                        </div>
                                         <flux:text class="inline text-stone-200">{{ $church->name }}</flux:text>
                                         <flux:badge icon="user" variant="solid" size="sm">
                                             {{ $this->getContactNumber($church->id) }}
@@ -33,10 +41,19 @@
                             @if (count($this->districtChurches) >= 1)
                                 @foreach ($this->districtChurches as $church)
                                     <div class="flex items-center gap-2 border rounded-sm px-3 py-2">
+                                        <div>
+                                            <flux:tooltip toggleable>
+                                                <flux:button class="text-white!" icon="information-circle" variant="ghost" size="sm" />
+                                                <flux:tooltip.content class="max-w-[20rem] space-y-2">
+                                                    <p>{{ $church->description }}</p>
+                                                </flux:tooltip.content>
+                                            </flux:tooltip>
+                                        </div>
                                         <flux:text class="inline text-stone-200">{{ $church->name }}</flux:text>
                                         <flux:badge icon="user" variant="solid" size="sm">
                                             {{ $this->getContactNumber($church->id) }}
                                         </flux:badge>
+
                                     </div>
                                 @endforeach
                             @else
@@ -50,6 +67,14 @@
                             @if (count($this->languageChurches) >= 1)
                                 @foreach ($this->languageChurches as $church)
                                     <div class="flex items-center gap-2 border rounded-sm px-3 py-2">
+                                        <div>
+                                            <flux:tooltip toggleable>
+                                                <flux:button class="text-white!" icon="information-circle" variant="ghost" size="sm" />
+                                                <flux:tooltip.content class="max-w-[20rem] space-y-2">
+                                                    <p>{{ $church->description }}</p>
+                                                </flux:tooltip.content>
+                                            </flux:tooltip>
+                                        </div>
                                         <flux:text class="inline text-stone-200">{{ $church->name }}</flux:text>
                                         <flux:badge icon="user" variant="solid" size="sm">
                                             {{ $this->getContactNumber($church->id) }}
