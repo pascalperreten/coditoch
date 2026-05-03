@@ -44,7 +44,7 @@ class ChurchForm extends Form
     #[Validate('required|integer|exists:events,id')]
     public $event_id;
 
-    #[Validate('required|string')]
+    #[Validate('required|string|max:16000')]
     public $description;
 
     public $slug = '';
