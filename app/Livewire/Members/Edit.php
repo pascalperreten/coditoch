@@ -47,7 +47,7 @@ class Edit extends Component
     }
 
     public function sendInvitation() {
-        $this->member->notify(new Invitation($this->member));
+        $this->member->notify(new Invitation($this->member, $this->ministry, $this->church->event)->locale(app()->getLocale()));
         $this->dispatch('updated');
         $this->modal('edit-member-' . $this->member->id)->close();
     }

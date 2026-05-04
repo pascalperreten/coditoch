@@ -2,6 +2,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Routing\Exceptions\InvalidSignatureException;
+use Illuminate\Session\TokenMismatchException;
 use App\Http\Middleware\EnsureCorrectMinistry;
 use App\Http\Middleware\SeeMinistry;
 use App\Http\Middleware\RedirectFromMinistryDashboard;
@@ -27,5 +29,13 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (TokenMismatchException $e, $request) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Your session expired. Please try submitting the form again.');
+        });
+        $exceptions->render(function (InvalidSignatureException $e, $request) {
+            return response()->view('errors.link-expired', [], 403);
+        });
     })->create();

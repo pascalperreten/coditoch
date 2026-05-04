@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('logo_path')->nullable();
             $table->string('logo_name')->nullable();
             $table->boolean('active_invitation_link')->default(false);
-            $table->string('invitation_token')->nullable();
+            $table->string('invitation_token')->unique()->random()->nullable();
             $table->unique(['ministry_id', 'slug']);
             $table->timestamps();
         });
