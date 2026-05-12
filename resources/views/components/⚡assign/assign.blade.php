@@ -166,16 +166,18 @@
                                     @endforeach
                                 </flux:table.cell>
                                 <flux:table.cell>
-                                    @if ($contact->comments)
-                                        <flux:modal.trigger name="contact-{{ $contact->id }}-info">
-                                        <flux:button icon="information-circle" />
-                                        </flux:modal.trigger>
+                                    <flux:modal.trigger name="contact-{{ $contact->id }}-info">
+                                    <flux:button icon="information-circle" />
+                                    </flux:modal.trigger>
 
-                                        <flux:modal name="contact-{{ $contact->id }}-info">
+                                    <flux:modal name="contact-{{ $contact->id }}-info">
+                                        <flux:heading size="lg">{{ __('Name Evangelist') }}</flux:heading>
+                                        <flux:text>{{ $contact->evangelist_name }}</flux:text>
+                                        @if ($contact->comments)
                                             <flux:heading size="lg">{{ __('Comments') }}</flux:heading>
-                                            {{ $contact->comments }}
-                                        </flux:modal>
-                                    @endif
+                                            <flux:text>{{ $contact->comments }}</flux:text>
+                                        @endif
+                                    </flux:modal>
                                     
                                     
                                 </flux:table.cell>
