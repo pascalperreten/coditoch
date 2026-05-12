@@ -35,7 +35,7 @@ new class extends Component {
 
     @if (count($this->event->churches) >= 1)
         @foreach ($this->event->churches()->orderBy('name')->get() as $church)
-            <div class="flex gap-2 py-2">
+            <div class="flex gap-2 py-2 items-center">
                 <div>
                     <flux:tooltip toggleable>
                         <flux:button icon="information-circle" variant="ghost" size="sm" />
@@ -52,7 +52,7 @@ new class extends Component {
                     {{ $church->name }}
                 </flux:select.option>
                 <flux:tooltip toggleable>
-                    <flux:button icon="user">
+                    <flux:button size="sm" icon="user">
                         {{ $this->getContactNumber($church->id) }}
                     </flux:button>
                     <flux:tooltip.content class="max-w-[20rem] space-y-2 text-left">
