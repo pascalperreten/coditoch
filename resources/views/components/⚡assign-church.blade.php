@@ -34,7 +34,7 @@ new class extends Component {
 <flux:select class="min-w-[20rem]" wire:model.change="contact_church" variant="listbox" placeholder="{{ __('Select a church') }}">
 
     @if (count($this->event->churches) >= 1)
-        @foreach ($this->event->churches as $church)
+        @foreach ($this->event->churches()->orderBy('name')->get() as $church)
             <div class="flex gap-2 py-2">
                 <div>
                     <flux:tooltip toggleable>
