@@ -40,7 +40,8 @@ new class extends Component {
                     <flux:tooltip toggleable>
                         <flux:button icon="information-circle" variant="ghost" size="sm" />
                         <flux:tooltip.content class="max-w-[18rem]">
-                            <p>{{ $church->description }}</p>
+                            <p class="text-white">{{ __('Number of Follow Up people') }}: {{ $church->members->count() }}</p>
+                            <p class="text-white">{{ $church->description }}</p>
                         </flux:tooltip.content>
                     </flux:tooltip>
                 </div>

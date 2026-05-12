@@ -182,6 +182,11 @@ new class extends Component {
                                         {{ $contact->gender === 'male' ? __('Male') : __('Female') }}
                                     </flux:text>
                                     <flux:separator />
+                                    <flux:heading size="lg">{{ __('Age') }}</flux:heading>
+                                    <flux:text>
+                                        {{ $contact->age }}
+                                    </flux:text>
+                                    <flux:separator />
                                     <flux:heading size="lg">{{ __('Address') }}</flux:heading>
                                     <flux:text>
                                         {{ __('City') . ': ' }}

@@ -207,8 +207,9 @@ class MemberForm extends Form
                 $this->member->church->update([
                     'follow_up_contact' => $newFollowUpContact,
                 ]);
+        } else {
+            $this->member->delete();
         }
-        
         $this->member = null;
     }
 

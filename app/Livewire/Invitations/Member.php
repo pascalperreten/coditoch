@@ -62,7 +62,7 @@ class Member extends Component
             }
         } elseif ($this->user->role === 'follow_up') { 
             $event = $this->user->events()->first();
-            return $this->redirect(route('events.show', [$this->user->event->ministry, $event]), navigate: true);
+            return $this->redirect(route('events.show', [$this->user->events->first()->ministry, $event]), navigate: true);
         } else {
             return $this->redirect(route('dashboard'), navigate: true);
         }

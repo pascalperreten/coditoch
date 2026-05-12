@@ -68,6 +68,7 @@ new class extends Component {
             <flux:table.column>Pastor</flux:table.column>
             <flux:table.column>{{ __('Ambassador') }}</flux:table.column>
             <flux:table.column>{{ __('Follow-up Contact') }}</flux:table.column>
+            <flux:table.column>{{ __('Number of Follow Up people') }}</flux:table.column>
             <flux:table.column>{{ __('Website') }}</flux:table.column>
             <flux:table.column></flux:table.column>
 
@@ -140,6 +141,11 @@ new class extends Component {
                         @else
                             <flux:text>{{ __('No Follow-Up Contact') }}</flux:text>
                         @endif
+                    </flux:table.cell>
+                    <flux:table.cell>
+                        <flux:badge icon="user">
+                            {{ $church->members->count() }}
+                        </flux:badge>
                     </flux:table.cell>
                     <flux:table.cell>
                         @if ($church->website_url)
