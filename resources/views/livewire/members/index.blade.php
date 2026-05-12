@@ -5,6 +5,7 @@
                 <flux:table.column>Name</flux:table.column>
                 <flux:table.column>{{ __('Email') }}</flux:table.column>
                 <flux:table.column>{{ __('Phone') }}</flux:table.column>
+                <flux:table.column>{{ __('Gender') }}</flux:table.column>
                 <flux:table.column>{{ __('Role') }}</flux:table.column>
                 <flux:table.column>Status</flux:table.column>
                 <flux:table.column></flux:table.column>
@@ -31,6 +32,11 @@
                                         <flux:icon.phone-arrow-up-right />
                                     </flux:link>
                                 </div>
+                            @endif
+                        </flux:table.cell>
+                        <flux:table.cell>
+                            @if ($member->gender)
+                                {{ $member->gender === 'male' ? __('Male') : __('Female') }}
                             @endif
                         </flux:table.cell>
                         <flux:table.cell>
