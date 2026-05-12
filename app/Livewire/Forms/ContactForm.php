@@ -59,6 +59,7 @@ class ContactForm extends Form
     public $evangelist_church_id = null;
     public $invalid_contact_details = 0;
     public $not_interested = false;
+    public $not_reached = false;
     public $part_of_church = false;
     public $fillable = ['name', 'way_to_get_in_contact', 'assigned', 'invalid_contact_details', 'foreign_city', 'city', 'comments', 'decision', 'event_id', 'church_id', 'evangelist_church_id'];
 
@@ -83,6 +84,7 @@ class ContactForm extends Form
         $this->not_interested = $contact->not_interested;
         $this->invalid_contact_details = (int) $contact->invalid_contact_details;
         $this->part_of_church = $contact->part_of_church;
+        $this->not_reached = $contact->not_reached;
         $this->follow_up_person = $contact->follow_up_person;
         
         $this->language = $contact->languages()->pluck('languages.id')->toArray();

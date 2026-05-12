@@ -32,6 +32,7 @@ class Contact extends Model
         'meeting_date',
         'met',
         'not_interested',
+        'not_reached',
         'part_of_church',
         'decision',
         'assigned',

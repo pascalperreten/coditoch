@@ -49,6 +49,10 @@
                 <flux:input wire:model="form.phone" type="text" />
                 <flux:error name="form.phone" />
             </flux:field>
+            <flux:radio.group wire:model="form.gender" label="{{ __('Gender') }}">
+                <flux:radio value="male" label="{{ __('Male') }}" checked />
+                <flux:radio value="female" label="{{ __('Female') }}" />
+            </flux:radio.group>
             @if ($member->ministry && $member->ministry->user_id !== $member->id || !$member->ministry)
                 <flux:field>
                     <flux:label>{{ __('Role') }}</flux:label>
@@ -66,7 +70,7 @@
                     </flux:select>
                     <flux:error name="form.role" />
                 </flux:field>
-                @if (auth()->user()->role !== 'church_member' && $this->form->role === 'church_member')
+                @if ($member->id === auth()->user()->id && auth()->user()->role !== 'church_member' && $this->form->role === 'church_member')
                     <flux:text class="text-red-500 text-sm">
                         {{ __('If you change your role to Member, you will not be able to change it again!') }}
                     </flux:text>

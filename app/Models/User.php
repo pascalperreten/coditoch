@@ -36,6 +36,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'password',
         'role',
         'phone',
+        'gender',
         'avatar_path',
         'avatar_name',
         'ministry_id',

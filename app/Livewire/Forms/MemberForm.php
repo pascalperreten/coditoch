@@ -21,6 +21,7 @@ class MemberForm extends Form
     public $last_name;
     public $email;
     public $phone;
+    public $gender;
     public $role;
     public $church_name;
     public $church_name_rule = 'required|string|max:255';
@@ -61,6 +62,7 @@ class MemberForm extends Form
             'first_name' =>'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'phone' => 'nullable|max:255',
+            'gender' => 'required|in:male,female',
             'church_name' => $church_name_rule,
             'role' => 'required|in:admin,editor,follow_up,pastor,ambassador,church_member',
             'events' => $event,
@@ -73,6 +75,7 @@ class MemberForm extends Form
         $this->last_name = $member->last_name;
         $this->email = $member->email;
         $this->phone = $member->phone;
+        $this->gender = $member->gender;
         $this->role = $member->role;
         $this->events = $member->events()->pluck('events.id')->toArray();
     }
@@ -97,6 +100,7 @@ class MemberForm extends Form
             'last_name' => $this->last_name,
             'email' => $this->email,
             'phone' => $this->phone,
+            'gender' => $this->gender,
             'role' => $this->role,
             'church_id' => $church->id,
             'locale' => config('app.locale'),
@@ -132,6 +136,7 @@ class MemberForm extends Form
             'last_name' => $this->last_name,
             'email' => $this->email,
             'phone' => $this->phone,
+            'gender' => $this->gender,
             'role' => $this->role,
             'ministry_id' => $ministry_id,
             'church_id' => $this->church_id,
@@ -187,7 +192,7 @@ class MemberForm extends Form
             $this->events = [];
         }
         
-        $this->member->update($this->only(['first_name', 'last_name', 'email', 'phone', 'role']));
+        $this->member->update($this->only(['first_name', 'last_name', 'email', 'phone', 'role', 'gender']));
         $this->member->events()->sync($this->events);
     }
 

@@ -335,7 +335,9 @@ new class extends Component {
                         </flux:table.cell>
                         <flux:table.cell>
                             @if (!$contact->invalid_contact_details)
-                                @if ($contact->not_interested)
+                                @if ($contact->not_reached)
+                                    <flux:badge color="red">{{ __('not reached') }}</flux:badge>
+                                @elseif ($contact->not_interested)
                                     <flux:badge color="red">{{ __('no interest') }}</flux:badge>
                                 @elseif($contact->meeting_date)
                                     <flux:badge color="{{ $contact->met ? 'green' : 'orange' }}">

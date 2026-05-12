@@ -31,6 +31,10 @@
             <flux:input wire:model="form.phone" type="text" />
             <flux:error name="form.phone" />
         </flux:field>
+        <flux:radio.group wire:model="form.gender" label="{{ __('Gender') }}">
+            <flux:radio value="male" label="{{ __('Male') }}" checked />
+            <flux:radio value="female" label="{{ __('Female') }}" />
+        </flux:radio.group>
         <flux:field>
             <flux:label>{{ __('Role') }}</flux:label>
             <flux:select required wire:model.live="form.role" variant="listbox"

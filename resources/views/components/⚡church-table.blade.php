@@ -143,9 +143,13 @@ new class extends Component {
                         @endif
                     </flux:table.cell>
                     <flux:table.cell>
-                        <flux:badge icon="user">
-                            {{ $church->members->count() }}
-                        </flux:badge>
+                        <div class="flex items-center gap-2">
+                            <flux:badge icon="user">
+                                {{ $church->members->count() }}
+                            </flux:badge>
+                            <flux:text>{{ __('Men') }}: {{ $church->members->where('gender', 'male')->count() }}</flux:text>
+                            <flux:text>{{ __('Women') }}: {{ $church->members->where('gender', 'female')->count() }}</flux:text>
+                        </div>
                     </flux:table.cell>
                     <flux:table.cell>
                         @if ($church->website_url)
