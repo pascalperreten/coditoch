@@ -187,6 +187,13 @@ new class extends Component {
                                         {{ $contact->age }}
                                     </flux:text>
                                     <flux:separator />
+                                    <flux:heading size="lg">{{ __('Language') }}</flux:heading>
+                                    <flux:text>
+                                        @foreach ($contact->languages as $key =>$language)
+                                            {{ $key === 0 ? '' : '| ' }}{{ $language->translation->name }}
+                                        @endforeach
+                                    </flux:text>
+                                    <flux:separator />
                                     <flux:heading size="lg">{{ __('Address') }}</flux:heading>
                                     <flux:text>
                                         {{ __('City') . ': ' }}
