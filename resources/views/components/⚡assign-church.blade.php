@@ -43,6 +43,12 @@ new class extends Component {
                             <p class="text-white">{{ __('Number of Follow Up people') }}: {{ $church->members->count() }}</p>
                             <p>{{ __('Men') }}: {{ $church->members->where('gender', 'male')->count() }}</p>
                             <p>{{ __('Women') }}: {{ $church->members->where('gender', 'female')->count() }}</p>
+                            <h6 class="text-white font-bold mt-2">{{ __('Languages') }}</h6>
+                            <p class="text-white">
+                                @foreach ($church->languages as $key => $language)
+                                    {{ $key === 0 ? '' : '| ' }}{{ $language->translation->name }}
+                                @endforeach
+                            </p>
                             <h6 class="text-white font-bold mt-2">{{ __('Description') }}</h6>
                             <p class="text-white">{{ $church->description }}</p>
                         </flux:tooltip.content>
