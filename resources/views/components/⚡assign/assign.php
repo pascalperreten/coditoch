@@ -129,6 +129,7 @@ new class extends Component
         $contact = Contact::findOrFail($id);
         $contact->update([
             'assigned' => true,
+            'church_id' => null,
             'church_name' => $this->church_name,
         ]);
         Flux::modals()->close();
