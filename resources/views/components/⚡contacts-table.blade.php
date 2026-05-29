@@ -4,10 +4,13 @@ use Livewire\Component;
 use App\Models\Contact;
 use App\Models\Church;
 use App\Models\Event;
+use App\Models\User;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Computed;
 use Livewire\WithPagination;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ContactsExport;
 
 new class extends Component {
     use WithPagination;
@@ -99,6 +102,12 @@ new class extends Component {
         $this->contacts();
     }
 
+    public function exportTable() {
+        $person = User::where('id', $this->currentFollowUpPerson)->select('first_name', 'last_name')->first();
+        $follow_up_person_name = $person ? $person->first_name . '_' . $person->last_name . '_' : '';
+        return Excel::download(new ContactsExport($this->church->id, $this->currentFollowUpPerson), $follow_up_person_name . 'contacts.xlsx');
+    }
+
     #[Computed]
     public function contacts()
     {
@@ -136,7 +145,7 @@ new class extends Component {
             $query->orderBy($this->sortBy, $this->sortDirection);
         }
 
-        return $query->paginate(20);
+        return $query->with('followUpPerson')->paginate(20);
     }
 };
 ?>
@@ -144,8 +153,7 @@ new class extends Component {
 <div>
     <flux:card>
         @if (isset($this->church) && auth()->user()->role !== 'church_member')
-            <div class="flex justify-end mb-4">
-                
+            <div class="flex justify-end gap-2 mb-4">
                 <flux:select variant="listbox" wire:model.change="currentFollowUpPerson" class="w-full sm:w-auto" placeholder="{{ __('Choose Follow Up Person') }}">
                     <flux:select.option value="{{ auth()->id() }}">{{ __('Show My Contacts') }}</flux:select.option>
                     <flux:select.option value="">{{ __('Show All Contacts') }}</flux:select.option>
@@ -153,6 +161,9 @@ new class extends Component {
                         <flux:select.option value="{{ $member->id }}">{{ $member->first_name . ' ' . $member->last_name }}</flux:select.option>
                     @endforeach
                 </flux:select>
+                <flux:button class="cursor-pointer" wire:click="exportTable">
+                    {{ __('Export') }} <i class="fa-light fa-file-arrow-down"></i>
+                </flux:button>
             </div>
         @endif
         <flux:table>
