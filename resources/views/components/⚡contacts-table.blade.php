@@ -20,6 +20,8 @@ new class extends Component {
     //public Contact $contact;
     public ?Church $church;
     public ?Event $event;
+    public ?int $currentFollowUpPerson = null;
+    public bool $showMyContacts = false;
 
     public function mount()
     {
@@ -100,21 +102,59 @@ new class extends Component {
     #[Computed]
     public function contacts()
     {
+        $query = Contact::query();
+
         if ($this->variant === 'event') {
-            return Contact::query()->where('event_id', $this->event->id)->tap(fn($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(20);
-        } elseif ($this->variant === 'church') {
+            $query->where('event_id', $this->event->id);
+        }
+
+        if ($this->variant === 'church') {
+
+            $query->where('church_id', $this->church->id);
+
             if (auth()->user()->role === 'church_member') {
-                return Contact::query()->where('church_id', $this->church->id)->whereHas('followUpPerson', fn($query) => $query->where('id', auth()->user()->id))->tap(fn($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(20);
+                $query->whereHas(
+                    'followUpPerson',
+                    fn ($q) => $q->where('id', auth()->id())
+                );
             } else {
-                return Contact::query()->where('church_id', $this->church->id)->where('assigned', true)->tap(fn($query) => $this->sortBy ? $query->orderBy($this->sortBy, $this->sortDirection) : $query)->paginate(20);
+                $query->where('assigned', true);
             }
         }
+
+        if ($this->showMyContacts) {
+            $query->where('follow_up_person', auth()->id());
+        }
+
+        // Filter by selected follow up person
+        if ($this->currentFollowUpPerson) {
+            $query->where('follow_up_person', $this->currentFollowUpPerson);
+        }
+
+        // Sorting
+        if ($this->sortBy) {
+            $query->orderBy($this->sortBy, $this->sortDirection);
+        }
+
+        return $query->paginate(20);
     }
 };
 ?>
 
 <div>
     <flux:card>
+        @if (isset($this->church) && auth()->user()->role !== 'church_member')
+            <div class="flex justify-end mb-4">
+                
+                <flux:select variant="listbox" wire:model.change="currentFollowUpPerson" class="w-full sm:w-auto" placeholder="{{ __('Choose Follow Up Person') }}">
+                    <flux:select.option value="{{ auth()->id() }}">{{ __('Show My Contacts') }}</flux:select.option>
+                    <flux:select.option value="">{{ __('Show All Contacts') }}</flux:select.option>
+                    @foreach ($this->church->members as $member)
+                        <flux:select.option value="{{ $member->id }}">{{ $member->first_name . ' ' . $member->last_name }}</flux:select.option>
+                    @endforeach
+                </flux:select>
+            </div>
+        @endif
         <flux:table>
             <flux:table.columns>
                 <flux:table.column sortable :sorted="$sortBy === 'created_at'" :direction="$sortDirection"
