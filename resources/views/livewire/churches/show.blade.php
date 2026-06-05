@@ -50,7 +50,7 @@
                 <flux:separator />
 
                 <div class="grid md:grid-cols-3 gap-4">
-                    <div class="rounded-md shadow p-4 border space-y-4">
+                    {{-- <div class="rounded-md shadow p-4 border space-y-4">
                         <flux:heading class="text-center">Pastor</flux:heading>
                         <flux:separator />
                         @foreach ($this->church->pastors as $pastor)
@@ -66,8 +66,8 @@
                                 </div>
                             @endif
                         @endforeach
-                    </div>
-                    <div class="rounded-md shadow p-4 border space-y-4">
+                    </div> --}}
+                    {{-- <div class="rounded-md shadow p-4 border space-y-4">
                         <flux:heading class="text-center">{{ __('Ambassador') }}</flux:heading>
                         <flux:separator />
                         @foreach ($this->church->ambassadors as $ambassador)
@@ -84,7 +84,7 @@
                                 </div>
                             @endif
                         @endforeach
-                    </div>
+                    </div> --}}
                     <div class="rounded-md shadow p-4 border space-y-4">
                         <flux:heading class="text-center">{{ __('Follow-Up Contact') }}</flux:heading>
                         <flux:separator />

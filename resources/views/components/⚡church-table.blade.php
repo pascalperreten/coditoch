@@ -65,10 +65,9 @@ new class extends Component {
         <flux:table.columns sticky>
             <flux:table.column>Name</flux:table.column>
             <flux:table.column>{{ __('Address') }}</flux:table.column>
-            <flux:table.column>Pastor</flux:table.column>
-            <flux:table.column>{{ __('Ambassador') }}</flux:table.column>
-            <flux:table.column>{{ __('Follow-up Contact') }}</flux:table.column>
+            <flux:table.column>{{ __('Follow-Up Contact') }}</flux:table.column>
             <flux:table.column>{{ __('Number of Follow Up people') }}</flux:table.column>
+            <flux:table.column>{{ __('Number of Contacts') }}</flux:table.column>
             <flux:table.column>{{ __('Website') }}</flux:table.column>
             <flux:table.column></flux:table.column>
 
@@ -106,32 +105,6 @@ new class extends Component {
                         </flux:dropdown>
 
                     </flux:table.cell>
-
-
-                    <flux:table.cell>
-                        <div class="flex items-center gap-2">
-                            @foreach ($church->pastors as $pastor)
-                                @if ($pastor)
-                                    <livewire:contact-card align="start" :contact="$pastor" />
-                                @else
-                                    <flux:text>{{ __('No Pastor') }}</flux:text>
-                                @endif
-                            @endforeach
-                        </div>
-                    </flux:table.cell>
-                    <flux:table.cell>
-                        <div class="flex items-center gap-2">
-                            @foreach ($church->ambassadors as $ambassador)
-                                @if ($ambassador)
-                                    <livewire:contact-card align="start" :contact="$ambassador" />
-                                @else
-                                    <flux:text>{{ __('No Ambassador') }}</flux:text>
-                                @endif
-                            @endforeach
-                        </div>
-
-
-                    </flux:table.cell>
                     <flux:table.cell>
                         @if ($church->followUpContact)
                             <div class="flex items-center gap-2">
@@ -143,13 +116,28 @@ new class extends Component {
                         @endif
                     </flux:table.cell>
                     <flux:table.cell>
-                        <div class="flex items-center gap-2">
-                            <flux:badge icon="user">
+                        <flux:tooltip toggleable>
+                            <flux:button size="sm" icon="user">
                                 {{ $church->members->count() }}
-                            </flux:badge>
-                            <flux:text>{{ __('Men') }}: {{ $church->members->where('gender', 'male')->count() }}</flux:text>
-                            <flux:text>{{ __('Women') }}: {{ $church->members->where('gender', 'female')->count() }}</flux:text>
-                        </div>
+                            </flux:button>
+                            <flux:tooltip.content class="max-w-[20rem] space-y-2 text-left">
+                                <h6 class="text-white font-bold">{{ __('Number of Follow Up people') }}</h6>
+                                <p>{{ __('Men') }}: {{ $church->members->where('gender', 'male')->count() }}</p>
+                                <p>{{ __('Women') }}: {{ $church->members->where('gender', 'female')->count() }}</p>
+                            </flux:tooltip.content>
+                        </flux:tooltip>
+                    </flux:table.cell>
+                    <flux:table.cell>
+                        <flux:tooltip toggleable>
+                            <flux:button size="sm" icon="user">
+                                {{ $church->contacts->count() }}
+                            </flux:button>
+                            <flux:tooltip.content class="max-w-[20rem] space-y-2 text-left">
+                                <h6 class="text-white font-bold">{{ __('Number of Contacts') }}</h6>
+                                <p>{{ __('Men') }}: {{ $church->contacts->where('gender', 'male')->count() }}</p>
+                                <p>{{ __('Women') }}: {{ $church->contacts->where('gender', 'female')->count() }}</p>
+                            </flux:tooltip.content>
+                        </flux:tooltip>
                     </flux:table.cell>
                     <flux:table.cell>
                         @if ($church->website_url)

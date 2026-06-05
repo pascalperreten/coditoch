@@ -40,27 +40,27 @@ class Church extends Component
             abort(404);
         }
         Event::where('invitation_token', $token)->firstOrFail();
-        $this->role = (string) old('role', $user->role ?? '');
+        //$this->role = (string) old('role', $user->role ?? '');
     }
 
-    public function registerChurch()
-    {
+    // public function registerChurch()
+    // {
 
-        $user = app(CreateNewUserAndChurch::class)->create([
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email' => $this->email,
-            'role' => $this->role,
-            'phone' => $this->phone,
-            'gender' => $this->gender,
-            'church_name' => $this->church_name,
-            'password' => $this->password,
-            'password_confirmation' => $this->password_confirmation,
-            'event_id' => $this->event->id,
-        ]);
+    //     $user = app(CreateNewUserAndChurch::class)->create([
+    //         'first_name' => $this->first_name,
+    //         'last_name' => $this->last_name,
+    //         'email' => $this->email,
+    //         'role' => 'ambassador',
+    //         'phone' => $this->phone,
+    //         'gender' => $this->gender,
+    //         'church_name' => $this->church_name,
+    //         'password' => $this->password,
+    //         'password_confirmation' => $this->password_confirmation,
+    //         'event_id' => $this->event->id,
+    //     ]);
 
-        //return redirect()->route('churches.manage', [$this->ministry, $this->event, $church], navigate: true);
-    }
+    //     //return redirect()->route('churches.manage', [$this->ministry, $this->event, $church], navigate: true);
+    // }
     public function render()
     {
         return view('livewire.invitations.church');

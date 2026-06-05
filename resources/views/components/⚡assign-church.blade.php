@@ -62,6 +62,7 @@ new class extends Component {
                         {{ $this->getContactNumber($church->id) }}
                     </flux:button>
                     <flux:tooltip.content class="max-w-[20rem] space-y-2 text-left">
+                        <h6 class="text-white font-bold">{{ __('Number of Contacts') }}</h6>
                         <p>{{ __('Men') }}: {{ $church->contacts->where('gender', 'male')->count() }}</p>
                         <p>{{ __('Women') }}: {{ $church->contacts->where('gender', 'female')->count() }}</p>
                     </flux:tooltip.content>

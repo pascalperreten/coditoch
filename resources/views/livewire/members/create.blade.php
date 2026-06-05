@@ -41,8 +41,7 @@
                 placeholder="{{ __('Select the role') }}">
 
                 @if ($this->church?->id || $this->churchInvitation)
-                    <flux:select.option value="pastor">Pastor</flux:select.option>
-                    <flux:select.option value="ambassador">{{ __('Ambassador') }}</flux:select.option>
+                    <flux:select.option value="ambassador">{{ __('Follow Up Admin') }}</flux:select.option>
                     <flux:select.option value="church_member">{{ __('Member') }}</flux:select.option>
                 @else
                     <flux:select.option value="admin">Admin</flux:select.option>

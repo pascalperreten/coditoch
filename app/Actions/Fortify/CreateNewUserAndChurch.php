@@ -31,7 +31,6 @@ class CreateNewUserAndChurch implements CreatesNewUsers
             ],
             'phone' => ['nullable', 'string', 'max:255'],
             'gender' => ['required', 'string', 'in:male,female'],
-            'role' => ['required', 'string', 'max:25'],
             'church_name' => [
                 'required', 
                 'string', 
@@ -47,7 +46,7 @@ class CreateNewUserAndChurch implements CreatesNewUsers
             'email' => $input['email'],
             'gender' => $input['gender'],
             'password' => $input['password'],
-            'role' => $input['role'],
+            'role' => 'ambassador',
             'locale' => config('app.locale'),
             'phone' => $input['phone'],
         ]);

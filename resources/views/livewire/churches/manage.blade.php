@@ -28,7 +28,7 @@
                 <flux:tab.group class="">
                     <flux:tabs scrollable scrollable:scrollbar="hide" wire:model="activeTab">
                         <flux:tab name="details">Details</flux:tab>
-                        <flux:tab name="follow-up-contact">{{ __('Follow-up Contact') }}</flux:tab>
+                        <flux:tab name="follow-up-contact">{{ __('Follow-Up Contact') }}</flux:tab>
                         @if ($this->evangelize)
                             <flux:tab name="evangelize">{{ __('Evangelize') }}</flux:tab>
                         @endif

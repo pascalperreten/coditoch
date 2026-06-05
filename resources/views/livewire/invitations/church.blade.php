@@ -35,14 +35,6 @@
             <flux:input name="church_name" type="text" :value="old('church_name')"/>
             <flux:error name="church_name" />
         </flux:field>
-        <flux:field>
-            <flux:label>{{ __('Role') }}</flux:label>
-            <flux:select name="role" variant="listbox" placeholder="{{ __('Select Role') }}" value="{{ $this->role }}">
-                <flux:select.option value="pastor">{{ __('Pastor') }}</flux:select.option>
-                <flux:select.option value="ambassador">{{ __('Ambassador') }}</flux:select.option>
-            </flux:select>
-            <flux:error name="role" />
-        </flux:field>
         <!-- Password -->
         <flux:field>
             <flux:label>{{ __('Password') }}</flux:label>

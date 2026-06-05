@@ -42,7 +42,13 @@ class Index extends Component
     }
 
     public function setRole($string) {
-        return Str::headline($string);
+        if(in_array($string, ['ambassador', 'pastor'])) {
+            return __('Follow-Up Admin');
+        } else if ($string === 'church_member') {
+            return __('Church Member');
+        } else {
+            return Str::headline($string);
+        }
     }
     
   

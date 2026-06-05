@@ -59,13 +59,12 @@
                     <flux:select wire:model.live="form.role" variant="listbox" placeholder="Wähle die Funktion">
 
                         @if ($this->church->id !== null || $this->churchInvitation)
-                            <flux:select.option value="pastor">Pastor</flux:select.option>
-                            <flux:select.option value="ambassador">{{ __('Ambassador') }}</flux:select.option>
+                            <flux:select.option value="ambassador">{{ __('Follow-Up Admin') }}</flux:select.option>
                             <flux:select.option value="church_member">{{ __('Member') }}</flux:select.option>
                         @else
                             <flux:select.option value="admin">Admin</flux:select.option>
                             <flux:select.option value="editor">Editor</flux:select.option>
-                            <flux:select.option value="follow_up">Follow Up</flux:select.option>
+                            <flux:select.option value="follow_up">Follow-Up</flux:select.option>
                         @endif
                     </flux:select>
                     <flux:error name="form.role" />
