@@ -34,9 +34,9 @@ new class extends Component {
         $this->contacts_not_decided = $this->event->contacts->where('decision', false)->count();
         $this->contacted = $this->event->contacts->whereNotNull('contacted_date')->where('invalid_contact_details', false)->count();
         $this->met = $this->event->contacts->where('met', true)->where('invalid_contact_details', false)->count();
-        $this->part_of_church = $this->ministry->contacts->where('part_of_church', true)->where('invalid_contact_details', false)->count();
-        $this->not_interested = $this->ministry->contacts->where('not_interested', true)->where('invalid_contact_details', false)->count();
-        $this->invalid_contact_details = $this->ministry->contacts->where('invalid_contact_details', true)->count();
+        $this->part_of_church = $this->event->contacts->where('part_of_church', true)->where('invalid_contact_details', false)->count();
+        $this->not_interested = $this->event->contacts->where('not_interested', true)->where('invalid_contact_details', false)->count();
+        $this->invalid_contact_details = $this->event->contacts->where('invalid_contact_details', true)->count();
 
 
 

@@ -34,9 +34,7 @@ new class extends Component {
         $this->part_of_church = $this->ministry->contacts->where('part_of_church', true)->where('invalid_contact_details', false)->count();
         $this->not_interested = $this->ministry->contacts->where('not_interested', true)->where('invalid_contact_details', false)->count();
         $this->invalid_contact_details = $this->ministry->contacts->where('invalid_contact_details', true)->count();
-
         $this->decisions_data = [['name' => __('Total'), 'value' => $this->decisions], ['name' => __('With contact details'), 'value' => $this->contacts_decided], ['name' => __('Without contact details'), 'value' => $this->decisions_without_contact_details]];
-
         $this->contacts_data = [['name' => __('Total'), 'value' => $this->contacts], ['name' => __('Decision'), 'value' => $this->contacts_decided], ['name' => __('No decision'), 'value' => $this->contacts_not_decided], ['name' => __('Contacted'), 'value' => $this->contacted], ['name' => __('Met'), 'value' => $this->met], ['name' => __('Part of Church'), 'value' => $this->part_of_church], ['name' => __('Not Interested'), 'value' => $this->not_interested], ['name' => __('Invalid Details'), 'value' => $this->invalid_contact_details]];
     }
 };

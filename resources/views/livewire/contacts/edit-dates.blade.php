@@ -21,6 +21,7 @@
                             </flux:select.option>
                         @endforeach
                     </flux:select>
+                    <flux:button wire:show="newFollowUpPerson" wire:click="saveFollowUpPerson" variant="outline">{{ __('Save Follow-Up Person') }}</flux:button>
                 @endcan
 
                 <flux:heading size="lg">{{ __('Get in touch') }}</flux:heading>

@@ -3,6 +3,7 @@
 use Livewire\Component;
 use App\Models\Ministry;
 use App\Models\Event;
+use App\Models\Contact;
 
 new class extends Component {
     public Ministry $ministry;
@@ -16,7 +17,7 @@ new class extends Component {
 
     public function hasGospelShares($church)
     {
-        return $church->contacts()->where('evangelist_church_id', $church->id)->count();
+        return Contact::where('evangelist_church_id', $church->id)->count();
     }
 };
 ?>

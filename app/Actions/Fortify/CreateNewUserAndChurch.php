@@ -30,6 +30,7 @@ class CreateNewUserAndChurch implements CreatesNewUsers
                 Rule::unique(User::class),
             ],
             'phone' => ['nullable', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'in:male,female'],
             'role' => ['required', 'string', 'max:25'],
             'church_name' => [
                 'required', 
@@ -44,6 +45,7 @@ class CreateNewUserAndChurch implements CreatesNewUsers
             'first_name' => $input['first_name'],
             'last_name' => $input['last_name'],
             'email' => $input['email'],
+            'gender' => $input['gender'],
             'password' => $input['password'],
             'role' => $input['role'],
             'locale' => config('app.locale'),

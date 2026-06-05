@@ -23,6 +23,7 @@ class Church extends Component
     public $last_name;
     public $email;
     public $phone;
+    public $gender = '';
     public $role;
     public $password;
     public $password_confirmation;
@@ -51,6 +52,7 @@ class Church extends Component
             'email' => $this->email,
             'role' => $this->role,
             'phone' => $this->phone,
+            'gender' => $this->gender,
             'church_name' => $this->church_name,
             'password' => $this->password,
             'password_confirmation' => $this->password_confirmation,

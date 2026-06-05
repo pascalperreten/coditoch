@@ -182,8 +182,8 @@ new class extends Component {
                 @endif
                 <flux:table.column sortable :sorted="$sortBy === 'contacted_date'" :direction="$sortDirection"
                     wire:click="sort('contacted_date')">{{ __('Contacted') }}</flux:table.column>
-                <flux:table.column sortable :sorted="$sortBy === 'met'" :direction="$sortDirection"
-                    wire:click="sort('met')">{{ __('Meeting') }}</flux:table.column>
+                <flux:table.column sortable :sorted="$sortBy === 'meeting_date'" :direction="$sortDirection"
+                    wire:click="sort('meeting_date')">{{ __('Meeting') }}</flux:table.column>
                 <flux:table.column>{{ __('Church') }}</flux:table.column>
                 <flux:table.column></flux:table.column>
                 <flux:table.column></flux:table.column>
@@ -419,7 +419,7 @@ new class extends Component {
                         </flux:table.cell>
                         @if (isset($this->church))
                             <flux:table.cell class="text-end" inset="top-bottom">
-                                <livewire:contacts.edit-dates wire:key="contact-{{ $contact->id }}"
+                                <livewire:contacts.edit-dates :event="$this->event" :church="$this->church" wire:key="contact-{{ $contact->id }}"
                                     :contact="$contact" />
                             </flux:table.cell>
                         @endif

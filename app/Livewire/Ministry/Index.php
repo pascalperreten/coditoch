@@ -29,7 +29,7 @@ class Index extends Component
         $decision2 = $this->ministry->contacts->where('decision', true)->count();
         $this->total_decisions = $decison1 + $decision2;
 
-        $this->gospel_shares = $this->ministry->gospelShares->sum('number_of_gospel_shares') + $this->ministry->contacts->count() + $this->ministry->decisions->sum('number_of_decisions');
+        $this->gospel_shares = $this->ministry->gospelShares->sum('number_of_gospel_shares');
 
         // if($this->user->role === 'follow_up') {
         //     $this->redirect(route('events.show', [$ministry, $this->user->event]));

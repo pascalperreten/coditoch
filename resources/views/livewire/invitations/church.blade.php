@@ -26,6 +26,10 @@
             <flux:input name="phone" type="text" :value="old('phone')"/>
             <flux:error name="phone" />
         </flux:field>
+        <flux:radio.group name="gender" label="{{ __('Gender') }}">
+            <flux:radio value="male" label="{{ __('Male') }}" />
+            <flux:radio value="female" label="{{ __('Female') }}" />
+        </flux:radio.group>
         <flux:field>
             <flux:label>{{ __('Name Church') }}</flux:label>
             <flux:input name="church_name" type="text" :value="old('church_name')"/>
