@@ -48,6 +48,11 @@ new class extends Component {
 
         Flux::toast('Kirche gelöscht', 'Die Kirche wurde erfolgreich gelöscht.', 'success');
     }
+
+    public function getContactCount($church)
+    {
+        return $church->contacts()->where('assigned', true)->count();
+    }
 };
 ?>
 
@@ -130,12 +135,12 @@ new class extends Component {
                     <flux:table.cell>
                         <flux:tooltip toggleable>
                             <flux:button size="sm" icon="user">
-                                {{ $church->contacts->count() }}
+                                {{ $this->getContactCount($church) }}
                             </flux:button>
                             <flux:tooltip.content class="max-w-[20rem] space-y-2 text-left">
                                 <h6 class="text-white font-bold">{{ __('Number of Contacts') }}</h6>
-                                <p>{{ __('Men') }}: {{ $church->contacts->where('gender', 'male')->count() }}</p>
-                                <p>{{ __('Women') }}: {{ $church->contacts->where('gender', 'female')->count() }}</p>
+                                <p>{{ __('Men') }}: {{ $church->contacts->where('gender', 'male')->where('assigned', true)->count() }}</p>
+                                <p>{{ __('Women') }}: {{ $church->contacts->where('gender', 'female')->where('assigned', true)->count() }}</p>
                             </flux:tooltip.content>
                         </flux:tooltip>
                     </flux:table.cell>
