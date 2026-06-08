@@ -28,12 +28,11 @@ class ContactsExport implements FromQuery, WithHeadings, WithMapping
     
     public function query()
     {
-        $query = Contact::query()->where('church_id', $this->church_id);
+        $query = Contact::query()->where('church_id', $this->church_id)->where('foreign_city', false)->where('assigned', true);
 
         if ($this->follow_up_person_id) {
             $query->where('follow_up_person', $this->follow_up_person_id);
         }
-
         return $query->with('followUpPerson');
     }
 
