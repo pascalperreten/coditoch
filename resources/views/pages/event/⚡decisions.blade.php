@@ -3,13 +3,17 @@
 use Livewire\Component;
 use App\Models\Ministry;
 use App\Models\Event;
+use App\Models\Church;
 use App\Models\Decision;
 use App\Models\Contact;
+use Livewire\WithPagination;
 
 new class extends Component
 {
+    use WithPagination;
     public Ministry $ministry;
     public Event $event;
+    public $tab = 'all';
     public $numberDecisions = 0;
     public $contacts = 0;
     public $totalDecisons = 0;
@@ -31,7 +35,33 @@ new class extends Component
     #[\Livewire\Attributes\Computed]
     public function decisions()
     {
-        return Decision::where('event_id', $this->event->id)->latest()->paginate(50);
+        return Decision::where('event_id', $this->event->id)->latest()->paginate(100);
+    }
+
+    public function decisionsEvent()
+    {
+        $query = Decision::where('event_id', $this->event->id)
+            ->whereNull('church_id');
+
+        return [
+            'sum' => $query->sum('number_of_decisions'),
+            'count' => $query->count(),
+        ];
+    }
+
+    public function decisionsChurches() {
+        return Decision::where('event_id', $this->event->id)
+            ->whereNotNull('church_id')
+            ->with('church')
+            ->get()
+            ->groupBy('church_id')
+            ->map(function ($decisions, $church_id) {
+                return [
+                    'church' => Church::find($church_id),
+                    'number_of_decisions' => $decisions->sum('number_of_decisions'),
+                    'decisions_count' => $decisions->count(),
+                ];
+            });
     }
 };
 ?>
@@ -59,37 +89,82 @@ new class extends Component
                 wire:navigate>
                 {{ __('Statistics') }}</flux:button>
             <flux:card>
-                <flux:table :paginate="$this->decisions()">
-                    <flux:table.columns>
+                <flux:tab.group>
+                    <flux:tabs wire:model="tab">
+                        <flux:tab name="all">{{ __('All') }}</flux:tab>
+                        <flux:tab name="churches">{{ __('Churches') }}</flux:tab>
+                    </flux:tabs>
 
-                        <flux:table.column>{{ __('Date') }}</flux:table.column>
-                        <flux:table.column>{{ __('Name Evangelist') }}</flux:table.column>
-                        <flux:table.column align="end">{{ __('Number') }}</flux:table.column>
-                    </flux:table.columns>
+                    <flux:tab.panel name="all">
+                        <flux:table :paginate="$this->decisions()">
+                            <flux:table.columns>
 
-                    <flux:table.rows>
-                        <flux:table.row wire:key="with-contadt-details">
-                            <flux:table.cell></flux:table.cell>
-                            <flux:table.cell>
-                                {{ __('With contact details') }}
-                            </flux:table.cell>
-                            <flux:table.cell align="end">
-                                {{ $this->contacts }}
-                            </flux:table.cell>
-                        </flux:table.row>
-                        @foreach ($this->decisions() as $decision)
-                            <flux:table.row wire:key="decision-{{ $decision->id }}">
-                                <flux:table.cell>{{ $this->date($decision->created_at) }}</flux:table.cell>
-                                <flux:table.cell>
-                                    {{ $decision->evangelist_name }}
-                                </flux:table.cell>
-                                <flux:table.cell align="end">
-                                    {{ $decision->number_of_decisions }}
-                                </flux:table.cell>
-                            </flux:table.row>
-                        @endforeach
-                    </flux:table.rows>
-                </flux:table>
+                                <flux:table.column>{{ __('Date') }}</flux:table.column>
+                                <flux:table.column>{{ __('Name Evangelist') }}</flux:table.column>
+                                <flux:table.column align="end">{{ __('Number') }}</flux:table.column>
+                            </flux:table.columns>
+
+                            <flux:table.rows>
+                                <flux:table.row wire:key="with-contadt-details">
+                                    <flux:table.cell></flux:table.cell>
+                                    <flux:table.cell>
+                                        {{ __('With contact details') }}
+                                    </flux:table.cell>
+                                    <flux:table.cell align="end">
+                                        {{ $this->contacts }}
+                                    </flux:table.cell>
+                                </flux:table.row>
+                                @foreach ($this->decisions() as $decision)
+                                    <flux:table.row wire:key="decision-{{ $decision->id }}">
+                                        <flux:table.cell>{{ $this->date($decision->created_at) }}</flux:table.cell>
+                                        <flux:table.cell>
+                                            {{ $decision->evangelist_name }}
+                                        </flux:table.cell>
+                                        <flux:table.cell align="end">
+                                            {{ $decision->number_of_decisions }}
+                                        </flux:table.cell>
+                                    </flux:table.row>
+                                @endforeach
+                            </flux:table.rows>
+                        </flux:table>
+                    </flux:tab.panel>
+                    <flux:tab.panel name="churches">
+                        <flux:table>
+                            <flux:table.columns>
+                                <flux:table.column>{{ __('Name Church') }}</flux:table.column>
+                                <flux:table.column>{{ __('Number of Entries') }}</flux:table.column>
+                                <flux:table.column align="end">{{ __('Number of Decisions') }}</flux:table.column>
+                            </flux:table.columns>
+
+                            <flux:table.rows>
+                                <flux:table.row wire:key="with-contadt-details">
+                                    <flux:table.cell>
+                                        {{ __('Decisions') . ' ' . $this->event->name }}
+                                    </flux:table.cell>
+                                    <flux:table.cell>
+                                        {{ $this->decisionsEvent()['count'] }}
+                                    </flux:table.cell>
+                                    <flux:table.cell align="end">
+                                        {{ $this->decisionsEvent()['sum'] }}
+                                    </flux:table.cell>
+                                </flux:table.row>
+                                @foreach ($this->decisionsChurches() as $decisionChurch)
+                                
+                                    <flux:table.row wire:key="church-{{ $decisionChurch['church']->id }}">
+                                        <flux:table.cell>{{ $decisionChurch['church']->name }}</flux:table.cell>
+                                        <flux:table.cell>
+                                            {{ $decisionChurch['decisions_count'] }}
+                                        </flux:table.cell>
+                                        <flux:table.cell align="end">
+                                            {{ $decisionChurch['number_of_decisions'] }}
+                                        </flux:table.cell>
+                                    </flux:table.row>
+                                @endforeach
+                            </flux:table.rows>
+                        </flux:table>
+                    </flux:tab.panel>
+                </flux:tab.group>
+                
 
             </flux:card>
         </div>

@@ -248,10 +248,14 @@ class ContactForm extends Form
         $this->resetCounter++;
     }
 
-    public function addDecisions(Event $event) {
+    public function addDecisions(Event $event, ?Church $church) {
         $this->validateOnlyStep(['number_of_decisions', 'decision_evangelist_name']);
+        if($church) {
+            $this->church_id = $church->id;
+        }
         Decision::create([
             'event_id' => $event->id,
+            'church_id' => $this->church_id,
             'number_of_decisions' => $this->number_of_decisions,
             'evangelist_name' => $this->decision_evangelist_name,
         ]);

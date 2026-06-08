@@ -1,8 +1,10 @@
 <?php
 
 use Livewire\Component;
+use Livewire\WithPagination;
 
 new class extends Component {
+    use WithPagination;
     public $model;
 
     public function date($date)
@@ -13,7 +15,7 @@ new class extends Component {
     #[\Livewire\Attributes\Computed]
     public function gospelShares()
     {
-        return $this->model->gospelShares()->latest()->paginate(50);
+        return $this->model->gospelShares()->latest()->paginate(100);
     }
 };
 ?>

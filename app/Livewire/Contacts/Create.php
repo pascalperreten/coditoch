@@ -84,7 +84,7 @@ class Create extends Component
         $this->success_message=__('Contact added');
     }
     public function addDecisions() {
-        $this->form->addDecisions($this->event);
+        $this->form->addDecisions($this->event, $this->church);
         $this->form->setContactForm($this->event);
         $this->page = 0;
         $this->success_message=__('Decisions added');
@@ -112,7 +112,7 @@ class Create extends Component
         return $this->form->form_fields->district &&  $this->form->unknown_postal_code;
     }
     public function getIsContactEmptyProperty(): bool {
-        dd('hey');
+        
         if ($this->form->way_to_get_in_contact !== '') {
             $this->isContactEmpty =  false;
         }
