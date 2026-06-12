@@ -5,6 +5,7 @@ use App\Models\Event;
 use App\Models\Ministry;
 use App\Models\Church;
 use Flux\Flux;
+use Livewire\Attributes\On;
 
 new class extends Component {
     public $search = '';
@@ -80,7 +81,7 @@ new class extends Component {
 
         <flux:table.rows>
             @foreach ($this->churches() as $church)
-                <flux:table.row :key="$church->id">
+                <flux:table.row wire:key="{{ $church->id }}">
                     <flux:table.cell>{{ $church->name }}
                     </flux:table.cell>
                     <flux:table.cell class="flex items-center gap-2">
@@ -113,8 +114,7 @@ new class extends Component {
                     <flux:table.cell>
                         @if ($church->followUpContact)
                             <div class="flex items-center gap-2">
-
-                                <livewire:follow-up-contact align="start" :church="$church" />
+                                <livewire:follow-up-contact align="start" :church="$church" wire:key="follow-up-contact-{{ $church->id }}" />
                             </div>
                         @else
                             <flux:text>{{ __('No Follow-Up Contact') }}</flux:text>

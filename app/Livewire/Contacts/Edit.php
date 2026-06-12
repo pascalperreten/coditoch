@@ -42,6 +42,7 @@ class Edit extends Component
             'foreign_city' => true,
             'city' => $this->newCity,
             'church_id' => null,
+            'follow_up_person' => null,
             'assigned' => false,
         ]);
         Flux::modal('lives-in-another-city')->close();

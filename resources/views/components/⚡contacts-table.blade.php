@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\User;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Reactive;
 use Livewire\WithPagination;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
@@ -34,7 +35,7 @@ new class extends Component {
     #[On('updated')]
     public function refresh()
     {
-        //
+        $this->contacts();
     }
 
     public function districtMapUrl($contact)
@@ -107,6 +108,7 @@ new class extends Component {
         $follow_up_person_name = $person ? $person->first_name . '_' . $person->last_name . '_' : '';
         return Excel::download(new ContactsExport($this->church->id, $this->currentFollowUpPerson), $follow_up_person_name . 'contacts.xlsx');
     }
+
 
     #[Computed]
     public function contacts()

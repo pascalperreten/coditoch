@@ -12,12 +12,15 @@
 
             <form class="space-y-6">
                 @can('update', $contact->church)
-                    <flux:select variant="listbox" label="{{ __('Follow-Up Person') }}"
+                    <flux:select wire:key="follow-up-person-{{ $contact->id }}-{{ $key_number }}" variant="listbox" label="{{ __('Follow-Up Person') }}"
                         wire:model.change="form.follow_up_person" placeholder="{{ __('Select a follow-up person') }}"
                         description="{{ __('Who will follow up with this person?') }}">
                         @foreach ($contact->church->members as $member)
                             <flux:select.option :value="$member->id">
-                                {{ $member->first_name . ' ' . $member->last_name }}
+                                <div class="flex items-center space-between gap-2 w-full">
+                                    <div>{{ $member->first_name . ' ' . $member->last_name }}</div>
+                                    <flux:badge icon="user" variant="outline" class="ml-auto">{{ $member->contacts->count() }}</flux:badge>
+                                </div>
                             </flux:select.option>
                         @endforeach
                     </flux:select>

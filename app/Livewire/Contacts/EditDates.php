@@ -10,13 +10,13 @@ use App\Models\Event;
 use App\Models\Church;
 use App\Livewire\Forms\ContactForm;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use App\Notifications\ContactAddedToChurchMember;
 
 class EditDates extends Component
 {
     public ContactForm $form;
 
-    #[Computed]
     public $contact;
     public ?Event $event;
     public ?Church $church;
@@ -24,6 +24,7 @@ class EditDates extends Component
     public $meeting_date;
     public $follow_up_person;
     public $newFollowUpPerson = false;
+    public $key_number = 0;
 
     public function mount() {
         $this->form->setContact($this->contact);
@@ -57,11 +58,19 @@ class EditDates extends Component
         $this->dispatch('updated');
     }
 
+    #[On('member-contacts-updated')]
+    public function refreshMembers()
+    {
+        $this->key_number++;
+    }
+
     public function saveFollowUpPerson() {
+        $this->dispatch('member-contacts-updated')->to(component: EditDates::class);
+        $this->dispatch('updated');
         $this->contact->update(['follow_up_person' => $this->form->follow_up_person]);
         $this->newFollowUpPerson = false;
         $this->contact->followUpPerson->notify(new ContactAddedToChurchMember($this->event->ministry, $this->event, $this->contact->church, $this->contact->followUpPerson));
-        $this->dispatch('updated');
+
     }
 
     public function render()
