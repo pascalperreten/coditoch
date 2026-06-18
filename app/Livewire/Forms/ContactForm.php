@@ -136,6 +136,11 @@ class ContactForm extends Form
             $this->contact->update(['not_interested' => false]);
             $this->not_interested = false;
         }
+
+        if($name === 'not_reached' && $value == 0) {
+            $this->contact->update(['invalid_contact_details' => false]);
+            $this->invalid_contact_details = false;
+        }
         
         $this->contact->update([$name => $value]);
     }

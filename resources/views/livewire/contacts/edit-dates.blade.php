@@ -29,38 +29,28 @@
 
                 <flux:heading size="lg">{{ __('Get in touch') }}</flux:heading>
 
-                <flux:radio.group wire:model.lazy="form.invalid_contact_details"
-                    label="{{ __('Contact details correct') }}" variant="cards" class="max-sm:flex-col">
-                    <flux:radio :value="0" label="{{ __('Yes') }}"
-                        description="{{ __('Were you able to reach the person using the contact details provided?') }}" />
-                    <flux:radio :value="1" label="{{ __('No') }}"
-                        description="{{ __('Were the contact details incorrect and you were unable to get in touch?') }}" />
-                </flux:radio.group>
-                @if (!$this->form->met && !$this->form->not_interested)
+                <flux:field>
+                    <flux:label>{{ __('First attempt to make contact') }}</flux:label>
+                    <flux:description>
+                        {{ __('Please fill this out even if you were unable to reach the person.') }}
+                    </flux:description>
+                    <div class="flex">
+                        <flux:date-picker locale="{{ app()->getLocale() }}" with-today
+                            placeholder="{{ __('Select Date') }}" class="flex-grow"
+                            wire:model.lazy="form.contacted_date" />
+                        @if ($this->form->contacted_date)
+                            <flux:button wire:click="resetContacted">{{ __('Reset') }}</flux:button>
+                        @endif
+
+                    </div>
+                    <flux:error name="form.contacted_date" />
+                </flux:field>
+
+                {{-- @if (!$this->form->met && !$this->form->not_interested)
                 @endif
 
-                @if (!$this->form->invalid_contact_details)
-                    <flux:checkbox.group variant="cards">
-                        <flux:checkbox wire:model.lazy="form.decision" label="{{ __('Decision for Christ') }}"
-                            description="{{ __('The Person has made a decision for Christ.') }}" />
-                    </flux:checkbox.group>
-
-                    <flux:field>
-                        <flux:label>{{ __('First attempt to make contact') }}</flux:label>
-                        <flux:description>
-                            {{ __('Please fill this out even if you were unable to reach the person.') }}
-                        </flux:description>
-                        <div class="flex">
-                            <flux:date-picker locale="{{ app()->getLocale() }}" with-today
-                                placeholder="{{ __('Select Date') }}" class="flex-grow"
-                                wire:model.lazy="form.contacted_date" />
-                            @if ($this->form->contacted_date)
-                                <flux:button wire:click="resetContacted">{{ __('Reset') }}</flux:button>
-                            @endif
-
-                        </div>
-                        <flux:error name="form.contacted_date" />
-                    </flux:field>
+                @if (!$this->form->invalid_contact_details) --}}
+                    
 
                     @if (isset($this->form->contacted_date))
                         <flux:radio.group wire:model.lazy="form.not_reached"
@@ -70,8 +60,12 @@
                             <flux:radio :value="1" label="{{ __('No') }}"
                                 description="{{ __('You were not able to reach the person.') }}" />
                         </flux:radio.group>
-                        @if (!$this->form->not_reached)
-                            
+                        @if ($this->form->not_reached)
+                            <flux:checkbox.group variant="cards">
+                                <flux:checkbox wire:model.lazy="form.invalid_contact_details" label="{{ __('Invalid Contact Details') }}"
+                                    description="{{ __('The contact details provided were not valid.') }}" />
+                            </flux:checkbox.group>
+                        @else
                             <flux:field>
                                 <flux:label>{{ __('Meeting') }}</flux:label>
 
@@ -96,23 +90,27 @@
                                         description="{{ __('You got in touch with the person, but the person is not interested in meeting up with you?') }}" />
                                 </flux:checkbox.group>
                             @endif
-                        @endif
-                    @endif
 
-                    @if ($this->form->meeting_date && !$this->form->not_interested)
-                        <flux:checkbox.group variant="cards">
-                            <flux:checkbox wire:model.lazy="form.met" label="{{ __('Met') }}"
-                                description="{{ __('Did you meet up with that person?') }}" />
-                        </flux:checkbox.group>
+                            @if ($this->form->meeting_date && !$this->form->not_interested)
+                                <flux:checkbox.group variant="cards">
+                                    <flux:checkbox wire:model.lazy="form.met" label="{{ __('Met') }}"
+                                        description="{{ __('Did you meet up with that person?') }}" />
+                                </flux:checkbox.group>
 
-                        @if ($this->form->met)
+                                @if ($this->form->met)
+                                    <flux:checkbox.group variant="cards">
+                                        <flux:checkbox wire:model.lazy="form.part_of_church" label="{{ __('Part of Church') }}"
+                                            description="{{ __('Is this person part of the church, or part of a small group?') }}" />
+                                    </flux:checkbox.group>
+                                @endif
+                    {{-- @endif --}}
+                            @endif
                             <flux:checkbox.group variant="cards">
-                                <flux:checkbox wire:model.lazy="form.part_of_church" label="{{ __('Part of Church') }}"
-                                    description="{{ __('Is this person part of the church, or part of a small group?') }}" />
+                                <flux:checkbox wire:model.lazy="form.decision" label="{{ __('Decision for Christ') }}"
+                                    description="{{ __('The Person has made a decision for Christ.') }}" />
                             </flux:checkbox.group>
                         @endif
                     @endif
-                @endif
             </form>
         </div>
     </flux:modal>
