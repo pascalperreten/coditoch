@@ -34,7 +34,10 @@ class Manage extends Component
         if($this->church->followUpContact) {
             $this->follow_up_contact = $this->church->followUpContact->id;
         }
-        
+    }
+
+    public function followUpContacts() {
+        return $this->church->members->where('role', 'ambassador')->sortBy('first_name');
     }
 
     public function updatedFollowUpContact() {

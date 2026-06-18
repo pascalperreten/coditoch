@@ -43,9 +43,9 @@
                     </flux:tab.panel>
                     <flux:tab.panel name="follow-up-contact">
                         <flux:select variant="listbox" wire:model.change="follow_up_contact"
-                            label="{{ __('Follow-up Contact') }}" placeholder="{{ __('Follow-up Contact') }}"
+                            label="{{ __('Follow-Up Contact') }}" placeholder="{{ __('Follow-Up Contact') }}"
                             description="{{ __('Please indicate the person we should contact for follow-up work.') }}">
-                            @foreach ($this->church->members as $member)
+                            @foreach ($this->followUpContacts() as $member)
                                 <flux:select.option value="{{ $member->id }}" wire:key="{{ $member->id }}">
                                     {{ $member->first_name }} {{ $member->last_name }}
                                 </flux:select.option>
