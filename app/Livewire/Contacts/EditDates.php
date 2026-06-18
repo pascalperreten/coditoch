@@ -31,7 +31,8 @@ class EditDates extends Component
     }
 
     public function resetContacted() {
-        $this->contact->update(['contacted_date' => null, 'meeting_date' => null]);
+        $this->contact->update(['contacted_date' => null]);
+        $this->resetMeeting();
         $this->form->setContact($this->contact);
         $this->dispatch('updated');
     }
@@ -40,6 +41,7 @@ class EditDates extends Component
         $this->contact->update([
             'meeting_date' => null,
             'met' => false,
+            'part_of_church' => false,
             ]);
         $this->form->setContact($this->contact);
         $this->resetErrorBag('form.meeting_date');
